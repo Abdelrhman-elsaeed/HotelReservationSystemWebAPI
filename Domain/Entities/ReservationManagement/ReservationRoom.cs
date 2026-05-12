@@ -1,9 +1,8 @@
 ﻿
 namespace Domain.Entities.ReservationManagement
 {
-    public class ReservationRoom
+    public class ReservationRoom : BaseEntity
     {
-        public int ReservationId { get; set; }
         [ForeignKey("Room")]
         public int RoomId { get; set; }
         public Room Room { get; set; }

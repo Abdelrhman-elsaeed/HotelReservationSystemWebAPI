@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.RoomManagement
 {
-    public class RoomFacility
+    public class RoomFacility : BaseEntity
     {
         [ForeignKey("Room")]
         public int RoomId { get; set; }

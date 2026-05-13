@@ -1,4 +1,5 @@
 ﻿using Application.DTOS.Room;
+using Application.ViewModel.Room;
 using AutoMapper;
 using Domain.Entities.RoomManagement;
 using System;
@@ -11,7 +12,14 @@ namespace Application.AutoMapper.Profiles
     {
         public RoomProfile()
         {
+            //Room Type
             CreateMap<AddRoomTypeDto, RoomType>().ReverseMap();
+            CreateMap<AddRoomTypeDto, AddRoomTypeVM>().ReverseMap();
+
+            CreateMap<GetRoomTypeDto, RoomType>().ReverseMap();
+            CreateMap<GetRoomTypeVM, GetRoomTypeDto>().ReverseMap();
+
+            //Room
         }
    
     }

@@ -3,6 +3,7 @@ using Application.CQRS.Room.Command;
 using AutoMapper;
 using Domain.Repositories.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -30,6 +31,9 @@ namespace HotelReservationSystem.API
             // Register DbContext with the connection string
             builder.Services.AddDbContext<Context>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            //DI
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
             var app = builder.Build();
 

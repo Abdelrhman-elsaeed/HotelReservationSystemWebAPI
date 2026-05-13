@@ -4,6 +4,8 @@ namespace Application.DTOS.Room
 {
     public class AddRoomTypeDto
     {
+        public int? ID { get; set; }
+
         [Required(ErrorMessage = "Room type name is required.")]
         [StringLength(100, ErrorMessage = "Room type name cannot exceed 100 characters.")]
         public string Name { get; set; } = string.Empty;

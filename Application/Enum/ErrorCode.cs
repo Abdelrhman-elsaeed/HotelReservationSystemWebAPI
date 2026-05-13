@@ -7,6 +7,7 @@
 
 
         AddRoomTypeFail=100,
-        RoomTypeIsExist=101
+        RoomTypeIsExist=101,
+        GetRoomTypeFail=102,
     }
 }

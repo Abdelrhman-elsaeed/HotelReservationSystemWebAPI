@@ -23,7 +23,7 @@ namespace Application.CQRS.Room.Command
         {
 
             //validate is this type exist before 
-            var IsExistBefore = await _repository.CheckExistsByConditionAsync(x => x.Name == request.model.Name);
+            var IsExistBefore = await _repository.CheckExistsByConditionAsync(x => x.Name == request.model.Name, cancellationToken);
             if (IsExistBefore)
             {
                 return ResponseViewModel<AddRoomTypeDto>.Failure(Enum.ErrorCode.RoomTypeIsExist, $"Room Type '{request.model.Name}' already exists.");
@@ -31,8 +31,8 @@ namespace Application.CQRS.Room.Command
 
             var entity = request.model.Map<RoomType>();
 
-            var addedEntity = await _repository.AddAsync(entity);
-            var isSaved = await _repository.SaveChangesAsync();
+            var addedEntity = await _repository.AddAsync(entity, cancellationToken);
+            var isSaved = await _repository.SaveChangesAsync(cancellationToken);
 
             if (!isSaved)
             {

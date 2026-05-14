@@ -23,7 +23,7 @@ namespace Application.CQRS.Room.Queries
         }
         public async Task<ResponseViewModel<GetRoomTypeDto>> Handle(GetRoomTypeQuery request, CancellationToken cancellationToken)
         {
-            var ResultEntity = await _repository.GetByIDAsync(request.id);
+            var ResultEntity = await _repository.GetByIDAsync(request.id, cancellationToken);
 
             if (ResultEntity is null)
                 return ResponseViewModel<GetRoomTypeDto>.Failure(Enum.ErrorCode.GetRoomTypeFail, message: "Room Type not found!");

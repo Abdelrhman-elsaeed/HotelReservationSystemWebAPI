@@ -14,6 +14,7 @@ namespace Application.AutoMapper.Profiles
     {
         public FacilityProfile()
         {
+            //Facility
             CreateMap<AddFacilityDto, Facility>().ReverseMap();
             CreateMap<AddFacilityDto, AddFacilityVM>().ReverseMap();
 
@@ -25,6 +26,7 @@ namespace Application.AutoMapper.Profiles
 
             CreateMap<GetFacilityDto, Facility>().ReverseMap();
             CreateMap<GetFacilityDto, GetFacilityVM>().ReverseMap();
+
         }
     }
 }

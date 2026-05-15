@@ -20,7 +20,7 @@ namespace HotelReservationSystem.API.Controllers
             _Mediator = mediator;
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> AddRoomType(AddRoomTypeVM model)
         {
             var RoomTypeDto = model.Map<AddRoomTypeDto>();

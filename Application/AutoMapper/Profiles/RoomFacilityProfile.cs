@@ -15,7 +15,7 @@ namespace Application.AutoMapper.Profiles
     {
         public RoomFacilityProfile()
         {
-            CreateMap<AssignFacilityToRoomDto, Facility>().ReverseMap();
+            CreateMap<AssignFacilityToRoomDto, RoomFacility>().ReverseMap();
             CreateMap<AssignFacilityToRoomDto, AssignFacilityToRoomVM>().ReverseMap();
 
             CreateMap<GetRoomFacilitiesDto, RoomFacility>().ReverseMap();
@@ -23,3 +23,4 @@ namespace Application.AutoMapper.Profiles
         }
     }
 }
+        

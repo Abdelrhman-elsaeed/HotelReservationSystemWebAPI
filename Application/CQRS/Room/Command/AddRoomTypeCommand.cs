@@ -22,7 +22,7 @@ namespace Application.CQRS.Room.Command
         public async Task<ResponseViewModel<AddRoomTypeDto>> Handle(AddRoomTypeCommand request, CancellationToken cancellationToken)
         {
 
-            //validate is this type exist before 
+            //validate is type exist before 
             var IsExistBefore = await _repository.CheckExistsByConditionAsync(x => x.Name == request.model.Name, cancellationToken);
             if (IsExistBefore)
             {

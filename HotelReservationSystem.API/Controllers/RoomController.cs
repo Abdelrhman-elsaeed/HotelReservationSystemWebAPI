@@ -1,11 +1,18 @@
 ﻿using Application.AutoMapper.Profiles;
 using Application.CQRS.Room.Command;
+using Application.CQRS.Room.Orchestrators; 
 using Application.DTOS;
+using Application.DTOS.Facility;
 using Application.DTOS.Room;
+using Application.DTOS.RoomPicture;
+using Application.ViewModel.Facility;
 using Application.ViewModel.Room;
+using HotelReservationSystem.API.Helper.Extension; 
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HotelReservationSystem.API.Controllers
 {
@@ -18,6 +25,29 @@ namespace HotelReservationSystem.API.Controllers
         public RoomController(IMediator mediator)
         {
             _Mediator = mediator;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddEntireRoom([FromForm] AddRoomTypeVM typeVM,[FromForm] AddRoomDetailsVM detailsVM,[FromForm] AddFacilityVM facilityVM,[FromForm] List<IFormFile> Pictures) 
+        {
+            // 1. Convert IFormFile specifically into your FileUploadDto
+            var picturesDto = Pictures.ToFileUploadDtos();
+
+            // 2. Map ViewModels to DTOs based on your existing architecture pattern
+            var typeDto = typeVM.Map<AddRoomTypeDto>();
+            var detailsDto = detailsVM.Map<AddRoomDetailsDto>();
+            var facilityDto = facilityVM.Map<AddFacilityDto>();
+
+            // 3. Trigger the orchestrator with the strictly typed DTOs
+            var orchestratorCommand = new AddRoomOrchestrator(typeDto, detailsDto, facilityDto, picturesDto);
+            var result = await _Mediator.Send(orchestratorCommand);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
         }
 
         [HttpPost]

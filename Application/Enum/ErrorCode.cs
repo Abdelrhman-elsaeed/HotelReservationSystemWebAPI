@@ -10,6 +10,7 @@
         AddRoomTypeFail=100,
         RoomTypeIsExist=101,
         GetRoomTypeFail=102,
+        AddRoomDetailsFail=103,
 
 
         AddFacilityFail=201,

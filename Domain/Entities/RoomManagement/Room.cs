@@ -8,5 +8,6 @@
         public RoomType RoomType { get; set; }
         public ICollection<RoomPicture> Pictures { get; set; }
         public ICollection<RoomFacility> RoomFacilities { get; set; }
+        public ICollection<RoomOffer> RoomOffers { get; set; }
     }
 }

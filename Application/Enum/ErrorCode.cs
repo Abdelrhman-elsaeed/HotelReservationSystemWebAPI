@@ -11,6 +11,8 @@
         RoomTypeIsExist=101,
         GetRoomTypeFail=102,
         AddRoomDetailsFail=103,
+        GetRoomTotalPriceFail=104,
+        RoomNotFound=105,
 
 
         AddFacilityFail=201,

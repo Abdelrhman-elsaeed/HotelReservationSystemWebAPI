@@ -6,7 +6,7 @@ namespace Domain.Entities.ReservationManagement
         [ForeignKey("Guest")]
         public int GuestId { get; set; }
         public ReservationStatus Status { get; set; }
-        public string SpecialRequest { get; set; }
+        public string? SpecialRequest { get; set; }
         public decimal TotalAmount { get; set; }
 
 

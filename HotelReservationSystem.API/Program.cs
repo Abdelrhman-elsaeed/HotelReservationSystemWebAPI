@@ -1,6 +1,7 @@
 using Application.AutoMapper.Profiles;
 using Application.CQRS.Room.Command;
 using AutoMapper;
+using Domain.Entities.RoomManagement;
 using Domain.Helper.Services;
 using Domain.Repositories.Interfaces;
 using HotelReservationSystem.API.Middlewares;
@@ -37,6 +38,7 @@ namespace HotelReservationSystem.API
 
             //DI
             builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<IRoomRepository,RoomRepository>();
             builder.Services.AddScoped<IFileHandlingService, FileHandlingService>();
             builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
             builder.Services.AddScoped<TransactionMiddleware>();

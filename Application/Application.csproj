@@ -16,9 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\RoomReservation\" />
-    <Folder Include="CQRS\Reservation\" />
+    <Folder Include="CQRS\Guest\Command\" />
+    <Folder Include="CQRS\Reservation\Queries\" />
     <Folder Include="CQRS\RoomPicture\Queries\" />
+    <Folder Include="CQRS\ReservationRoom\Command\" />
   </ItemGroup>
 
 </Project>

@@ -13,9 +13,11 @@
         AddRoomDetailsFail=103,
         GetRoomTotalPriceFail=104,
         RoomNotFound=105,
+        InvalidDate=106,
+        RoomNotAvailable=107,
 
 
-        AddFacilityFail=201,
+        AddFacilityFail =201,
         UpdateFacilityFail=202,
         FacilityNotExist=203,
         DeleteFacilityFail = 204,
@@ -25,6 +27,11 @@
 
 
         NoImageUploaded=401,
-        UploadImagesFail=402
+        UploadImagesFail=402,
+
+
+        GuestNotFound=500,
+
+        AddReservationFail=600,
     }
 }

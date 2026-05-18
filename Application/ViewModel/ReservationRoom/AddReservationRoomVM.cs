@@ -18,5 +18,9 @@ namespace Application.ViewModel.ReservationRoom
         [Required(ErrorMessage = "Check-Out date is required.")]
         [DataType(DataType.Date)]
         public DateTime CheckOutDate { get; set; }
+
+        [Required(ErrorMessage = "At least one guest must be assigned to the room.")]
+        [MinLength(1, ErrorMessage = "You must provide at least one guest ID.")]
+        public List<int> RoomGuestIds { get; set; }
     }
 }

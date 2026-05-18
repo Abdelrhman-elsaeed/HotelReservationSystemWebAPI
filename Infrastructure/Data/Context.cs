@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Data
+﻿using Domain.Entities.Guest;
+
+namespace Infrastructure.Data
 {
     public class Context : DbContext
     {

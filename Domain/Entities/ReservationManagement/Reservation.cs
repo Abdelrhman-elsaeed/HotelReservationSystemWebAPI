@@ -1,5 +1,4 @@
-﻿
-namespace Domain.Entities.ReservationManagement
+﻿namespace Domain.Entities.ReservationManagement
 {
     public class Reservation : BaseEntity
     {
@@ -10,7 +9,7 @@ namespace Domain.Entities.ReservationManagement
         public decimal TotalAmount { get; set; }
 
 
-        public Guest Guest { get; set; }
+        public Domain.Entities.Guest.Guest Guest { get; set; }
         public Payment Payment { get; set; }
         public Feedback Feedback { get; set; }
         public ICollection<ReservationRoom> ReservationRooms { get; set; }

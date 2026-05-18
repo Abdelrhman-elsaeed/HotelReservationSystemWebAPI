@@ -1,4 +1,5 @@
-﻿
+﻿using Domain.Entities.Guest;
+
 namespace Domain.Entities.ReservationManagement
 {
     public class ReservationRoom : BaseEntity
@@ -11,6 +12,7 @@ namespace Domain.Entities.ReservationManagement
         public DateTime CheckOutDate { get; set; }
         public Reservation Reservation { get; set; }
         public Room Room { get; set; }
-        public ICollection<Guest> RoomGuests { get; set; }
+        public ICollection<GuestReservationRoom> GuestReservationRooms { get; set; }
+
     }
 }

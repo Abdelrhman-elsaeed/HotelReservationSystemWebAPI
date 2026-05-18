@@ -12,8 +12,8 @@ namespace Application.CQRS.Guest.Queries
     public class IsGuestExistQueryHandler : IRequestHandler<IsGuestExistQuery, ResponseViewModel<bool>>
     {
 
-        IRepository<Domain.Entities.Guest> _Repository;
-        public IsGuestExistQueryHandler(IRepository<Domain.Entities.Guest> Repository)
+        IRepository<Domain.Entities.Guest.Guest> _Repository;
+        public IsGuestExistQueryHandler(IRepository<Domain.Entities.Guest.Guest> Repository)
         {
             _Repository = Repository;
         }

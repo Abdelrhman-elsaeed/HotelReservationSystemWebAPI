@@ -22,6 +22,9 @@ namespace Application.AutoMapper.Profiles
             CreateMap<AddRoomDetailsDto, Room>().ReverseMap();
             CreateMap<AddRoomDetailsDto, AddRoomDetailsVM>().ReverseMap();
 
+            CreateMap<UpdateRoomDetailsDto, Room>().ReverseMap();
+            CreateMap<UpdateRoomDetailsDto, UpdateRoomDetailsVM>().ReverseMap();
+
             //Room
         }
    

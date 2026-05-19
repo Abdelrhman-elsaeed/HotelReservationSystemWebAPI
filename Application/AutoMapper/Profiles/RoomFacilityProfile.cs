@@ -20,6 +20,9 @@ namespace Application.AutoMapper.Profiles
 
             CreateMap<GetRoomFacilitiesDto, RoomFacility>().ReverseMap();
             CreateMap<GetRoomFacilitiesDto, GetRoomFacilitiesVM>().ReverseMap();
+
+            CreateMap<UpdateRoomFacilityDto, RoomFacility>().ReverseMap();
+            CreateMap<UpdateRoomFacilityDto, UpdateRoomFacilityVM>().ReverseMap();
         }
     }
 }

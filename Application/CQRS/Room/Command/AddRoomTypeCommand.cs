@@ -13,8 +13,8 @@ namespace Application.CQRS.Room.Command
     // Request Handler
     public class AddRoomTypeCommandHandler : IRequestHandler<AddRoomTypeCommand, ResponseViewModel<AddRoomTypeDto>>
     {
-        private readonly IRepository<RoomType> _repository;
-        public AddRoomTypeCommandHandler(IRepository<RoomType> repository)
+        private readonly IRepository<Domain.Entities.RoomManagement.RoomType> _repository;
+        public AddRoomTypeCommandHandler(IRepository<Domain.Entities.RoomManagement.RoomType> repository)
         {
             _repository = repository;
         }
@@ -29,7 +29,7 @@ namespace Application.CQRS.Room.Command
                 return ResponseViewModel<AddRoomTypeDto>.Failure(Enum.ErrorCode.RoomTypeIsExist, $"Room Type '{request.model.Name}' already exists.");
             }
 
-            var entity = request.model.Map<RoomType>();
+            var entity = request.model.Map<Domain.Entities.RoomManagement.RoomType>();
 
             var addedEntity = await _repository.AddAsync(entity, cancellationToken);
             var isSaved = await _repository.SaveChangesAsync(cancellationToken);

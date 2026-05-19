@@ -15,12 +15,16 @@
         RoomNotFound=105,
         InvalidDate=106,
         RoomNotAvailable=107,
+        RoomTypeNotExist=108,
+        UpdateRoomDetailsFail=109,
 
 
         AddFacilityFail =201,
         UpdateFacilityFail=202,
         FacilityNotExist=203,
         DeleteFacilityFail = 204,
+        RoomFacilityNotExist=205,
+        UpdateRoomFacilityFail=206,
 
         FacilityAssignedBefore=300,
         AssignFacilityToRoomFail=301,

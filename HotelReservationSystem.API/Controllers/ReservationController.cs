@@ -5,7 +5,6 @@ using Application.DTOS.Reservation;
 using Application.ViewModel.Receipt;
 using Application.ViewModel.Reservation;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservationSystem.API.Controllers
@@ -20,7 +19,6 @@ namespace HotelReservationSystem.API.Controllers
         {
             _Mediator = mediator;
         }
-
 
         [HttpPost]
         public async Task<IActionResult> AddReservation([FromBody] AddReservationVM model, CancellationToken cancellationToken)

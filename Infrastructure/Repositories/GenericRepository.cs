@@ -46,6 +46,7 @@ namespace Infrastructure.Repositories
             // Get the type once
             var entityType = entity.GetType();
 
+            entity.UpdatedDate = DateTime.Now;
             foreach (var entryProperty in changeTrackerEntry.Properties)
             {
                 if (properties.Contains(entryProperty.Metadata.Name))

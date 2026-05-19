@@ -35,7 +35,10 @@
 
 
         GuestNotFound=500,
+        AddGuestFail=501,
+        DeleteGuestFail=502,
+        UpdateGuestFail=503,
 
-        AddReservationFail=600,
+        AddReservationFail =600,
     }
 }

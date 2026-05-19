@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Guest\Command\" />
     <Folder Include="CQRS\Reservation\Queries\" />
     <Folder Include="CQRS\RoomPicture\Queries\" />
     <Folder Include="CQRS\ReservationRoom\Command\" />

@@ -15,9 +15,9 @@ namespace Application.CQRS.Room.Queries
     //request handler
     public class GetRoomTypeQueryHandler : IRequestHandler<GetRoomTypeQuery, ResponseViewModel<GetRoomTypeDto>>
     {
-        private readonly IRepository<RoomType> _repository;
+        private readonly IRepository<Domain.Entities.RoomManagement.RoomType> _repository;
 
-        public GetRoomTypeQueryHandler(IRepository<RoomType> repository)
+        public GetRoomTypeQueryHandler(IRepository<Domain.Entities.RoomManagement.RoomType> repository)
         {
             _repository = repository;
         }

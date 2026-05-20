@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="LinqKit.Core" Version="1.2.11" />
     <PackageReference Include="MediatR" Version="14.1.0" />
   </ItemGroup>
 
@@ -19,7 +20,6 @@
     <Folder Include="CQRS\Reservation\Queries\" />
     <Folder Include="CQRS\RoomPicture\Queries\" />
     <Folder Include="CQRS\ReservationRoom\Command\" />
-    <Folder Include="CQRS\RoomType\Command\" />
   </ItemGroup>
 
 </Project>

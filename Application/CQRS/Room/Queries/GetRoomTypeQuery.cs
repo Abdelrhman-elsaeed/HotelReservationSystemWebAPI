@@ -2,7 +2,7 @@
 
 using Application.AutoMapper.Profiles;
 using Application.DTOS;
-using Application.DTOS.Room;
+using Application.DTOS.RoomType;
 using Domain.Entities.RoomManagement;
 using Domain.Repositories.Interfaces;
 using MediatR;

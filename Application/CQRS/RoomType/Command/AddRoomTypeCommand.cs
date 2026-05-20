@@ -1,11 +1,10 @@
 ﻿using Application.AutoMapper.Profiles;
 using Application.DTOS;
-using Application.DTOS.Room;
-using Domain.Entities.RoomManagement;
+using Application.DTOS.RoomType;
 using Domain.Repositories.Interfaces;
 using MediatR;
 
-namespace Application.CQRS.Room.Command
+namespace Application.CQRS.RoomType.Command
 {
     // Request
     public sealed record AddRoomTypeCommand(AddRoomTypeDto model) : IRequest<ResponseViewModel<AddRoomTypeDto>>;

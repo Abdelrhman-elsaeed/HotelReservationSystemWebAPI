@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.ViewModel.Room
+namespace Application.ViewModel.RoomType
 {
     public class GetRoomTypeVM
     {

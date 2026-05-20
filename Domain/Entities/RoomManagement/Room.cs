@@ -9,5 +9,6 @@
         public ICollection<RoomPicture> Pictures { get; set; }
         public ICollection<RoomFacility> RoomFacilities { get; set; }
         public ICollection<RoomOffer> RoomOffers { get; set; }
+        public ICollection<ReservationRoom> ReservationRooms { get; set; }
     }
 }

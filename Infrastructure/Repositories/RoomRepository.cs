@@ -12,6 +12,18 @@ namespace Infrastructure.Repositories
         public RoomRepository(Context Context) : base(Context)
         {
         }
+
+        public async Task<IEnumerable<Room>> GetRoomsByPredicateAsync(Expression<Func<Room, bool>>? predicate = null, CancellationToken cancellationToken = default)
+        {
+            var query = this.GetAll();
+            if (predicate is not null)
+            {
+                 query = query.Where(predicate);
+            }
+
+            return await query.ToListAsync(cancellationToken);
+        }
+
         public async Task<decimal?> GetRoomTotalPriceAsync(int RoomId,CancellationToken cancellationToken)
         {
             // to check offer is available or not

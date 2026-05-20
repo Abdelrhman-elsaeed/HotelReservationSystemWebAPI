@@ -2,19 +2,16 @@
 using Application.CQRS.Room.Command;
 using Application.CQRS.RoomFacility.Command;
 using Application.CQRS.RoomPicture.Command;
+using Application.CQRS.RoomType.Command;
 using Application.DTOS;
 using Application.DTOS.Facility;
 using Application.DTOS.Room;
 using Application.DTOS.RoomFacility;
 using Application.DTOS.RoomPicture;
-using Domain.Entities;
-using Domain.Entities.RoomManagement;
+using Application.DTOS.RoomType;
 using HotelReservationSystem.API.Helper.BusinessExceptions;
 using MediatR;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace Application.CQRS.Room.Orchestrators
 {

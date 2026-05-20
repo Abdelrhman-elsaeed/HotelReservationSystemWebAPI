@@ -17,6 +17,8 @@
         RoomNotAvailable=107,
         RoomTypeNotExist=108,
         UpdateRoomDetailsFail=109,
+        UpdateRoomTypeFail=110,
+        GetAllRoomsFail=111,
 
 
         AddFacilityFail =201,
@@ -38,6 +40,7 @@
         AddGuestFail=501,
         DeleteGuestFail=502,
         UpdateGuestFail=503,
+        GetGuestFail=504,
 
         AddReservationFail =600,
     }

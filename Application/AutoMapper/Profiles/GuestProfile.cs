@@ -17,6 +17,9 @@ namespace Application.AutoMapper.Profiles
 
             CreateMap<UpdateGuestDto, Guest>().ReverseMap();
             CreateMap<UpdateGuestDto, UpdateGuestVM>().ReverseMap();
+
+            CreateMap<GetGuestDto, Guest>().ReverseMap();
+            CreateMap<GetGuestDto, GetGuestVM>().ReverseMap();
         }
     }
 }

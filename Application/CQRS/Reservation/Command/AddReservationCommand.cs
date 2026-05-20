@@ -30,7 +30,7 @@ namespace Application.CQRS.Reservation.Command
             // 1. Check guest exist
             var IsGuestExist = await _Mediator.Send(new IsGuestExistQuery(request.model.GuestId), cancellationToken);
             if (!IsGuestExist.IsSuccess)
-                return ResponseViewModel<ReservationReceiptDto>.Failure(Application.Enum.ErrorCode.GuestNotFound, message: "Guest is not found");
+                return ResponseViewModel<ReservationReceiptDto>.Failure(Application.Enum.ErrorCode.GuestNotFound, message: "Guest not found");
 
             // 2. Initialize the main Reservation Entity
             var reservationEntity = new Domain.Entities.ReservationManagement.Reservation

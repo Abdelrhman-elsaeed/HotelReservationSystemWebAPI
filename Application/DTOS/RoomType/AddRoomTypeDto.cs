@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Application.DTOS.Room
+namespace Application.DTOS.RoomType
 {
     public class AddRoomTypeDto
     {

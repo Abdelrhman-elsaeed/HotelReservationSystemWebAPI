@@ -1,18 +1,20 @@
 ﻿using Application.AutoMapper.Profiles;
 using Application.CQRS.Room.Command;
-using Application.CQRS.Room.Orchestrators; 
+using Application.CQRS.Room.Orchestrators;
+using Application.CQRS.Room.Queries;
+using Application.CQRS.RoomType.Command;
 using Application.DTOS;
 using Application.DTOS.Facility;
 using Application.DTOS.Room;
 using Application.DTOS.RoomPicture;
+using Application.DTOS.RoomType;
 using Application.ViewModel.Facility;
 using Application.ViewModel.Room;
+using Application.ViewModel.RoomType;
 using HotelReservationSystem.API.Helper.Extension; 
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+
 
 namespace HotelReservationSystem.API.Controllers
 {
@@ -57,6 +59,17 @@ namespace HotelReservationSystem.API.Controllers
                 return Ok(ResponseViewModel<AddRoomTypeVM>.Success(result.Data.Map<AddRoomTypeVM>(),result.Message));
             else
                 return NotFound(ResponseViewModel<AddRoomTypeVM>.Failure(result.ErrorCode, result.Message));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllRooms([FromForm] DateTime? StartDate, [FromForm] DateTime? EndDate, [FromForm] int? RoomTypeId)
+        {
+            var result = await _Mediator.Send(new GetAllRoomsQuery(StartDate, EndDate, RoomTypeId));
+
+            if (result.IsSuccess)
+                return Ok(ResponseViewModel<IEnumerable<GetRoomVM>>.Success(result.Data.Map<IEnumerable<GetRoomVM>>(), result.Message));
+            else
+                return NotFound(ResponseViewModel<IEnumerable<GetRoomVM>>.Failure(result.ErrorCode, result.Message));
         }
     }
 }

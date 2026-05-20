@@ -1,5 +1,7 @@
 ﻿using Application.DTOS.Room;
+using Application.DTOS.RoomType;
 using Application.ViewModel.Room;
+using Application.ViewModel.RoomType;
 using AutoMapper;
 using Domain.Entities.RoomManagement;
 using System;
@@ -25,7 +27,9 @@ namespace Application.AutoMapper.Profiles
             CreateMap<UpdateRoomDetailsDto, Room>().ReverseMap();
             CreateMap<UpdateRoomDetailsDto, UpdateRoomDetailsVM>().ReverseMap();
 
-            //Room
+            CreateMap<GetRoomDto, Room>().ReverseMap();
+            CreateMap<GetRoomDto, GetRoomVM>().ReverseMap();
+
         }
    
     }

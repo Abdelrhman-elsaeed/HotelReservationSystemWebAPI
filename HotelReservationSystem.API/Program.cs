@@ -1,5 +1,5 @@
 using Application.AutoMapper.Profiles;
-using Application.CQRS.Room.Command;
+using Application.CQRS.RoomType.Command;
 using AutoMapper;
 using Domain.Entities.RoomManagement;
 using Domain.Helper.Services;

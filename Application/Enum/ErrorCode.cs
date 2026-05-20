@@ -43,5 +43,8 @@
         GetGuestFail=504,
 
         AddReservationFail =600,
+
+        AddOfferFail=700,
+        AssigneOfferFail=701,
     }
 }

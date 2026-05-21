@@ -85,15 +85,21 @@ namespace Infrastructure.Repositories
             return RowSaved > 0;
         }
 
-        //--------------------------------------------------------------------------------------
-
         public void DeleteRange(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            _dbSet.RemoveRange(entities);
         }
+        public async Task<List<T>> GetAllByConditionAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
+        {
+            return await GetByCondition(expression).ToListAsync(cancellationToken);
+        }
+
+        //--------------------------------------------------------------------------------------
         public IQueryable<T> GetAllWithDeleted()
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

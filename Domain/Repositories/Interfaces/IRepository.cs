@@ -10,6 +10,7 @@
 
         Task<T?> GetByConditionAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
         Task<T?> GetByIDAsync(int id, CancellationToken cancellationToken = default);
+        Task<List<T>> GetAllByConditionAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
 
         Task<bool> CheckExistsByIDAsync(int id, CancellationToken cancellationToken = default);
         Task<bool> CheckExistsByConditionAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);

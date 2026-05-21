@@ -24,6 +24,20 @@ namespace Infrastructure.Repositories
             return await query.ToListAsync(cancellationToken);
         }
 
+        public async Task<IEnumerable<Room>> GetRoomsByPredicatePagedAsync(Expression<Func<Room, bool>>? predicate, int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+        {
+            var query = this.GetAll();
+
+            if (predicate is not null)
+            {
+                query = query.Where(predicate);
+            }
+
+            return await query.Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<decimal?> GetRoomTotalPriceAsync(int RoomId,CancellationToken cancellationToken)
         {
             // to check offer is available or not

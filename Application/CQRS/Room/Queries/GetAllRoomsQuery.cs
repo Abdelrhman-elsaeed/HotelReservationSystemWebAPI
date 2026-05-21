@@ -12,7 +12,9 @@ namespace Application.CQRS.Room.Queries
     public sealed record GetAllRoomsQuery(
          DateTime? StartDate
         , DateTime? EndDate
-        , int? RoomTypeId) : IRequest<ResponseViewModel<IEnumerable<GetRoomDto>>>;
+        , int? RoomTypeId
+        , int PageNumber = 1
+        , int PageSize = 10) : IRequest<ResponseViewModel<IEnumerable<GetRoomDto>>>;
 
 
     public class GetAllRoomsQueryHandler : IRequestHandler<GetAllRoomsQuery, ResponseViewModel<IEnumerable<GetRoomDto>>>
@@ -23,10 +25,16 @@ namespace Application.CQRS.Room.Queries
         {
             _Repository = Repository;
         }
+
         public async Task<ResponseViewModel<IEnumerable<GetRoomDto>>> Handle(GetAllRoomsQuery request, CancellationToken cancellationToken)
         {
+            if (request.PageNumber <= 0 || request.PageSize <= 0)
+            {
+                return ResponseViewModel<IEnumerable<GetRoomDto>>.Failure(ErrorCode.PaginationFail,message: "PageNumber and PageSize must be greater than zero.");
+            }
+
             var predicate = BuildPredicate(request);
-            var rooms = await _Repository.GetRoomsByPredicateAsync(predicate, cancellationToken);
+            var rooms = await _Repository.GetRoomsByPredicatePagedAsync(predicate,request.PageNumber,request.PageSize,cancellationToken);
 
             if (!rooms.Any())
                 return ResponseViewModel<IEnumerable<GetRoomDto>>.Failure(ErrorCode.GetAllRoomsFail, message: "There are no rooms found!");
@@ -56,7 +64,7 @@ namespace Application.CQRS.Room.Queries
             if (request.StartDate.HasValue && request.EndDate.HasValue)
             {
                 predicate = predicate.And(r => !r.ReservationRooms.Any(rr =>
-                    rr.Deleted == false && 
+                    rr.Deleted == false &&
                     rr.CheckInDate < request.EndDate &&
                     rr.CheckOutDate > request.StartDate));
             }

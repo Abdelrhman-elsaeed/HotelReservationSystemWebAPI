@@ -1,7 +1,6 @@
 using Application.AutoMapper.Profiles;
 using Application.CQRS.RoomType.Command;
 using AutoMapper;
-using Domain.Entities.RoomManagement;
 using Domain.Helper.Services;
 using Domain.Repositories.Interfaces;
 using HotelReservationSystem.API.Middlewares;

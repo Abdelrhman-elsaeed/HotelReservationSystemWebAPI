@@ -19,6 +19,7 @@
         UpdateRoomDetailsFail=109,
         UpdateRoomTypeFail=110,
         GetAllRoomsFail=111,
+        DeleteRoomDetailsFail=112,
 
 
         AddFacilityFail =201,
@@ -28,12 +29,16 @@
         RoomFacilityNotExist=205,
         UpdateRoomFacilityFail=206,
 
+
         FacilityAssignedBefore=300,
         AssignFacilityToRoomFail=301,
+        DeleteAllFacilitiesOfRoomFail=302,
 
 
         NoImageUploaded=401,
         UploadImagesFail=402,
+        RoomPictureNotExist=403,
+        DeleteRoomPicturesFail=404,
 
 
         GuestNotFound=500,
@@ -46,5 +51,7 @@
 
         AddOfferFail=700,
         AssigneOfferFail=701,
+
+        PaginationFail=800,
     }
 }

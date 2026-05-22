@@ -53,5 +53,12 @@
         AssigneOfferFail=701,
 
         PaginationFail=800,
+
+        AssignFeatureToRoleFail=900,
+        FeatureAssignedBefore=901,
+        HasAccessFail=902,
+
+        UserNotFound=1000,
+        InvalidPassword=1001
     }
 }

@@ -7,7 +7,10 @@ using HotelReservationSystem.API.Middlewares;
 using Infrastructure.Data;
 using Infrastructure.Helper;
 using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace HotelReservationSystem.API
@@ -17,6 +20,41 @@ namespace HotelReservationSystem.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            //====JWT Configuration===
+
+            builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+
+            var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>()!;
+
+            var keyBytes = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidateAudience = true,
+                    ValidAudience = jwtSettings.Audience,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+            builder.Services.AddAuthorization();
+            builder.Services.AddScoped<TokenGenerator>();
+            //builder.Services.AddScoped<UserService>();
+            //builder.Services.AddScoped<RoleFeatureService>();
+
+            //=========================
 
             // Add services to the container.
             builder.Services.AddControllers();
@@ -57,9 +95,8 @@ namespace HotelReservationSystem.API
             }
 
             app.UseStaticFiles();
-
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

@@ -9,6 +9,6 @@ namespace Domain.Entities
         public Reservation Reservation { get; set; }
         public string StaffResponse { get; set; }
         public int? StaffId { get; set; }
-        public User Staff { get; set; }
+        public Domain.Entities.User.User Staff { get; set; }
     }
 }

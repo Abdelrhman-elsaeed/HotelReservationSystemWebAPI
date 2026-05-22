@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
     <PackageReference Include="LinqKit.Core" Version="1.2.11" />
     <PackageReference Include="MediatR" Version="14.1.0" />
   </ItemGroup>
@@ -17,10 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="CQRS\Auth\Queries\" />
     <Folder Include="CQRS\Offer\Queries\" />
     <Folder Include="CQRS\Reservation\Queries\" />
     <Folder Include="CQRS\RoomOffer\Queries\" />
     <Folder Include="CQRS\RoomPicture\Queries\" />
+    <Folder Include="CQRS\User\Command\" />
+    <Folder Include="CQRS\User\Queries\" />
   </ItemGroup>
 
 </Project>

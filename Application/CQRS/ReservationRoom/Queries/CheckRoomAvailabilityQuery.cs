@@ -9,9 +9,9 @@ namespace Application.CQRS.RoomReservation.Queries
 
     public class CheckRoomAvailabilityQueryHandler : IRequestHandler<CheckRoomAvailabilityQuery, ResponseViewModel<bool>>
     {
-        private readonly IRepository<ReservationRoom> _reservationRoomRepository;
+        private readonly IRepository<Domain.Entities.ReservationManagement.ReservationRoom> _reservationRoomRepository;
 
-        public CheckRoomAvailabilityQueryHandler(IRepository<ReservationRoom> reservationRoomRepository)
+        public CheckRoomAvailabilityQueryHandler(IRepository<Domain.Entities.ReservationManagement.ReservationRoom> reservationRoomRepository)
         {
             _reservationRoomRepository = reservationRoomRepository;
         }

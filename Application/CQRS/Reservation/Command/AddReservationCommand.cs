@@ -1,6 +1,6 @@
 ﻿using Application.CQRS.Guest.Queries;
 using Application.CQRS.Room.Queries;
-using Application.CQRS.RoomReservation.Queries;
+using Application.CQRS.ReservationRoom.Queries;
 using Application.DTOS;
 using Application.DTOS.Receipt;
 using Application.DTOS.Reservation;
@@ -24,7 +24,6 @@ namespace Application.CQRS.Reservation.Command
             _Repository = Repository;
             _Mediator = mediator;
         }
-
         public async Task<ResponseViewModel<ReservationReceiptDto>> Handle(AddReservationCommand request, CancellationToken cancellationToken)
         {
             // 1. Check guest exist
@@ -32,37 +31,41 @@ namespace Application.CQRS.Reservation.Command
             if (!IsGuestExist.IsSuccess)
                 return ResponseViewModel<ReservationReceiptDto>.Failure(Application.Enum.ErrorCode.GuestNotFound, message: "Guest not found");
 
-            // 2. Initialize the main Reservation Entity
+            // 2. Validate dates and prepare multi-room availability request
+            var roomDateRequests = new List<RoomDateRequest>();
+            foreach (var rr in request.model.Rooms)
+            {
+                if (rr.CheckOutDate.Date <= rr.CheckInDate.Date)
+                    return ResponseViewModel<ReservationReceiptDto>.Failure(Enum.ErrorCode.InvalidDate, message: $"Invalid dates for Room ID {rr.RoomId}");
+
+                roomDateRequests.Add(new RoomDateRequest(rr.RoomId, rr.CheckInDate, rr.CheckOutDate));
+            }
+
+            // 3. Check availability for all rooms in a single query
+            var availabilityResponse = await _Mediator.Send(new CheckMultipleRoomsAvailabilityQuery(roomDateRequests), cancellationToken);
+            if (!availabilityResponse.IsSuccess || !availabilityResponse.Data)
+                return ResponseViewModel<ReservationReceiptDto>.Failure(Application.Enum.ErrorCode.RoomNotAvailable, message: availabilityResponse.Message);
+
+            // 4. Initialize the main Reservation Entity
             var reservationEntity = new Domain.Entities.ReservationManagement.Reservation
             {
                 GuestId = request.model.GuestId,
                 SpecialRequest = request.model.SpecialRequest,
-                Status = ReservationStatus.Pending, // Default start status
-                ReservationRooms = new List<ReservationRoom>()
+                Status = ReservationStatus.Pending,
+                ReservationRooms = new List<Domain.Entities.ReservationManagement.ReservationRoom>()
             };
 
             decimal grandTotalAmount = 0;
             var roomPrices = new Dictionary<int, decimal>();
 
-            // 3. Process each requested Room
+            // 5. Process each requested Room (pricing & mapping)
             foreach (var roomRequest in request.model.Rooms)
             {
-                // Validate Dates
-                if (roomRequest.CheckOutDate.Date <= roomRequest.CheckInDate.Date)
-                    return ResponseViewModel<ReservationReceiptDto>.Failure(Enum.ErrorCode.InvalidDate, message: $"Invalid dates for Room ID {roomRequest.RoomId}");
-
-                // Check Availability
-                var availabilityResponse = await _Mediator.Send(new CheckRoomAvailabilityQuery(roomRequest.RoomId, roomRequest.CheckInDate, roomRequest.CheckOutDate), cancellationToken);
-                
-                if (!availabilityResponse.IsSuccess || !availabilityResponse.Data)
-                    return ResponseViewModel<ReservationReceiptDto>.Failure(Application.Enum.ErrorCode.RoomNotAvailable, message: availabilityResponse.Message);
-                // ------------------------------------
-
                 int totalNights = (roomRequest.CheckOutDate.Date - roomRequest.CheckInDate.Date).Days;
 
                 // Get the Per-Night price
                 var roomPriceResponse = await _Mediator.Send(new GetRoomTotalPriceQuery(roomRequest.RoomId), cancellationToken);
-                
+
                 if (!roomPriceResponse.IsSuccess)
                     return ResponseViewModel<ReservationReceiptDto>.Failure(roomPriceResponse.ErrorCode, roomPriceResponse.Message);
 
@@ -71,7 +74,7 @@ namespace Application.CQRS.Reservation.Command
                 grandTotalAmount += roomTotalCostForStay;
 
                 // Map Room and Guests
-                var reservationRoom = new ReservationRoom
+                var reservationRoom = new Domain.Entities.ReservationManagement.ReservationRoom
                 {
                     RoomId = roomRequest.RoomId,
                     CheckInDate = roomRequest.CheckInDate,
@@ -85,10 +88,10 @@ namespace Application.CQRS.Reservation.Command
                 reservationEntity.ReservationRooms.Add(reservationRoom);
             }
 
-            // 4. Assign Final Server-Calculated Price
+            // 6. Assign Final Server-Calculated Price
             reservationEntity.TotalAmount = grandTotalAmount;
 
-            // 5. Save
+            // 7. Save
             var result = await _Repository.AddAsync(reservationEntity, cancellationToken);
             var IsSaved = await _Repository.SaveChangesAsync(cancellationToken);
 

@@ -4,4 +4,3 @@ global using System.Diagnostics;
 global using Domain.Entities;
 global using Domain.Entities.RoomManagement;
 global using Domain.Entities.ReservationManagement;
-global using Domain.Entities.UserManagement;

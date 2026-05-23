@@ -23,7 +23,6 @@
     <Folder Include="CQRS\Reservation\Queries\" />
     <Folder Include="CQRS\RoomOffer\Queries\" />
     <Folder Include="CQRS\RoomPicture\Queries\" />
-    <Folder Include="CQRS\User\Command\" />
     <Folder Include="CQRS\User\Queries\" />
   </ItemGroup>
 

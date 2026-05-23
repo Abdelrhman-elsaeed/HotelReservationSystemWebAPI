@@ -59,6 +59,7 @@
         HasAccessFail=902,
 
         UserNotFound=1000,
-        InvalidPassword=1001
+        InvalidPassword=1001,
+        AddUserFail=1002
     }
 }

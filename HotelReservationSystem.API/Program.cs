@@ -1,5 +1,6 @@
 using Application.AutoMapper.Profiles;
 using Application.CQRS.RoomType.Command;
+using Application.Helper;
 using AutoMapper;
 using Domain.Helper.Services;
 using Domain.Repositories.Interfaces;
@@ -50,10 +51,7 @@ namespace HotelReservationSystem.API
             });
 
             builder.Services.AddAuthorization();
-            builder.Services.AddScoped<TokenGenerator>();
-            //builder.Services.AddScoped<UserService>();
-            //builder.Services.AddScoped<RoleFeatureService>();
-
+            
             //=========================
 
             // Add services to the container.
@@ -77,6 +75,7 @@ namespace HotelReservationSystem.API
             builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IRoomRepository,RoomRepository>();
             builder.Services.AddScoped<IFileHandlingService, FileHandlingService>();
+            builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
             builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
             builder.Services.AddScoped<TransactionMiddleware>();
 

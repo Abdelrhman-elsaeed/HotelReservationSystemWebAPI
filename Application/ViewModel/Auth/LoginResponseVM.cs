@@ -5,6 +5,6 @@ using System.Text;
 namespace Application.ViewModel.Auth
 {
 
-    public record LoginResponseVM(string Token, string Name, string Role);
+    public record LoginResponseVM(string Token, string RefreshToken, string Name, string Role);
 
 }

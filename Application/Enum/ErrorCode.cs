@@ -60,6 +60,10 @@
 
         UserNotFound=1000,
         InvalidPassword=1001,
-        AddUserFail=1002
+        AddUserFail=1002,
+
+
+        LogoutFail=1100,
+        InvalidToken=1101,
     }
 }

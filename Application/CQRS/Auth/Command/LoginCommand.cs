@@ -37,11 +37,17 @@ namespace Application.CQRS.Auth.Command
             if (!isPasswordValid)
                 return ResponseViewModel<LoginResponseDto>.Failure(Enum.ErrorCode.InvalidPassword, message: "Incorrect password");
 
-            // 3. Generate Token
+            // 3. Generate Token,Refresh Token
             var token = _tokenGenerator.Generate(user.ID, user.Name, user.Role.ToString());
+            var refreshToken = _tokenGenerator.GenerateRefreshToken();
+
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+            await _userRepository.SaveChangesAsync(cancellationToken);
+
 
             // 4. Return Result
-            var responseDto = new LoginResponseDto(token, user.Name, user.Role.ToString());
+            var responseDto = new LoginResponseDto(token,refreshToken, user.Name, user.Role.ToString());
 
             return ResponseViewModel<LoginResponseDto>.Success(responseDto, message: "Logged In successfully");
         }

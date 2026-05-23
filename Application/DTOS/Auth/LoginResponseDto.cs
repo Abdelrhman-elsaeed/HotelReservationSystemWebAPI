@@ -4,5 +4,5 @@ using System.Text;
 
 namespace Application.DTOS.User
 {
-    public record LoginResponseDto(string Token, string Name, string Role);
+    public record LoginResponseDto(string Token, string RefreshToken, string Name, string Role);
 }

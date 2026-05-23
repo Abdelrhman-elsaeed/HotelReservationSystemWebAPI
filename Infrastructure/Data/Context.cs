@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Guest;
+using Domain.Entities.User;
 
 namespace Infrastructure.Data
 {

@@ -66,6 +66,7 @@ HotelReservationSystemWebAPI
 ├── ⚙️ Application             # CQRS Handlers, DTOs, AutoMapper Profiles, Business Logic
 ├── 🔌 Infrastructure          # EF Core DbContext, Migrations, Repository Implementations
 └── 🌐 HotelReservationSystem.API # Controllers, Middlewares, Filters, Program.cs (Presentation)
+   ```
 ---
 ## 🛠️ Technology Stack
 - **Framework:** .NET 8 / 9
@@ -73,7 +74,7 @@ HotelReservationSystemWebAPI
 - **Database:** SQL Server, Entity Framework Core (Code-First)
 - **Libraries:** MediatR, AutoMapper
 - **Security:** JWT (JSON Web Tokens)
-   ```
+
 ---
 ## 🚀 Getting Started
 ### Prerequisites

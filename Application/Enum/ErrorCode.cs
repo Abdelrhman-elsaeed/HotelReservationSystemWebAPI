@@ -48,8 +48,11 @@
         GetGuestFail=504,
 
         AddReservationFail =600,
+        ReservationNotFound=601,
+        CancelReservationFail=602,
+        UpdateReservationFail=603,
 
-        AddOfferFail=700,
+        AddOfferFail =700,
         AssigneOfferFail=701,
 
         PaginationFail=800,
@@ -61,9 +64,13 @@
         UserNotFound=1000,
         InvalidPassword=1001,
         AddUserFail=1002,
+        UserExistBefore=1003,
 
 
         LogoutFail=1100,
         InvalidToken=1101,
+
+        RegisterFail=1200,
+        
     }
 }

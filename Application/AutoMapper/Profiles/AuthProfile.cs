@@ -1,6 +1,8 @@
-﻿using Application.DTOS.User;
+﻿using Application.DTOS.Auth;
+using Application.DTOS.User;
 using Application.ViewModel.Auth;
 using AutoMapper;
+using Domain.Entities.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +15,8 @@ namespace Application.AutoMapper.Profiles
         {
             CreateMap<LoginRequestDto, LoginRequestVM>().ReverseMap();
             CreateMap<LoginResponseDto,LoginResponseVM >().ReverseMap();
+
+            CreateMap<RegisterDto, User>().ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
 
         }
     }

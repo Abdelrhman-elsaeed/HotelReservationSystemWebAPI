@@ -13,7 +13,7 @@ namespace Application.CQRS.ReservationRoom.Queries
 {
     public sealed record RoomDateRequest(int RoomId, DateTime CheckInDate, DateTime CheckOutDate);
 
-    public sealed record CheckMultipleRoomsAvailabilityQuery(List<RoomDateRequest> RoomRequests) : IRequest<ResponseViewModel<bool>>;
+    public sealed record CheckMultipleRoomsAvailabilityQuery(List<RoomDateRequest> RoomRequests, int? ExcludeReservationId = null) : IRequest<ResponseViewModel<bool>>;
 
     public class CheckMultipleRoomsAvailabilityQueryHandler : IRequestHandler<CheckMultipleRoomsAvailabilityQuery, ResponseViewModel<bool>>
     {
@@ -40,11 +40,12 @@ namespace Application.CQRS.ReservationRoom.Queries
             // Gets all overlapping reservation rooms for the requested RoomIds in a single SQL query
             var existingBookings = await _reservationRoomRepository.GetAllByConditionAsync(rr =>
                 roomIds.Contains(rr.RoomId) &&
-                rr.CheckInDate < maxCheckOutDate && 
+                rr.CheckInDate < maxCheckOutDate &&
                 rr.CheckOutDate > minCheckInDate &&
                 rr.Deleted == false &&
                 rr.Reservation.Status != ReservationStatus.Cancelled &&
-                rr.Reservation.Status != ReservationStatus.Rejected, 
+                rr.Reservation.Status != ReservationStatus.Rejected &&
+                (!request.ExcludeReservationId.HasValue || rr.ReservationId != request.ExcludeReservationId.Value),
                 cancellationToken);
 
             // Filter precisely in-memory according to exact pairs of boundaries 

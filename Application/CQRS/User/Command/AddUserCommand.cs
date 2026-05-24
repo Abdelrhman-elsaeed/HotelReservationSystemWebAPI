@@ -17,6 +17,13 @@ namespace Application.CQRS.User.Command
 
         public async Task<ResponseViewModel<AddUserResponseDto>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
+            var IsUserExistBefore = await _Repository.CheckExistsByConditionAsync(u => (u.Username == request.model.Username || u.Email == request.model.Email) 
+            && !u.Deleted,cancellationToken);
+
+            if (IsUserExistBefore)
+                return ResponseViewModel<AddUserResponseDto>.Failure(Enum.ErrorCode.UserExistBefore, message: "This user exist before try another one");
+
+
             var UserEntity = request.model.Map<Domain.Entities.User.User>();
 
             UserEntity.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.model.Password);

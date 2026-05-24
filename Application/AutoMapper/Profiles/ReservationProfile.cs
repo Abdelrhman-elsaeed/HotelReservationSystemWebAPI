@@ -16,6 +16,10 @@ namespace Application.AutoMapper.Profiles
         {
             CreateMap<AddReservationDto, Reservation>().ReverseMap();
             CreateMap<AddReservationDto, AddReservationVM>().ReverseMap();
+
+            CreateMap<Reservation, GetReservationDetailsDto>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedDate));
         }
     }
 }

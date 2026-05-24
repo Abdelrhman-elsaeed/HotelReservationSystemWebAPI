@@ -25,7 +25,7 @@ The project heavily focuses on **Clean/Onion Architecture**, **CQRS**, and clean
 
 ---
 
-## 🏗️ Architecture Decision Records (ADRs) - The "Why" Behind the Code
+## 🏗️ Architecture Decision Records (ADRs)
 
 > *"Programming is no longer just code that runs.. Programming has become documenting your thinking and architecture for your decisions."*
 
@@ -73,6 +73,7 @@ HotelReservationSystemWebAPI
 - **Database:** SQL Server, Entity Framework Core (Code-First)
 - **Libraries:** MediatR, AutoMapper
 - **Security:** JWT (JSON Web Tokens)
+   ```
 ---
 ## 🚀 Getting Started
 ### Prerequisites
@@ -82,7 +83,7 @@ HotelReservationSystemWebAPI
 1. Clone the repository:
    ```bash
    git clone https://github.com/Abdelrhman-elsaeed/HotelReservationSystemWebAPI.git
-   ```
+
 2. Navigate to the API directory:
    ```bash
    cd HotelReservationSystemWebAPI/HotelReservationSystem.API

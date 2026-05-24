@@ -7,9 +7,7 @@ The project heavily focuses on **Clean/Onion Architecture**, **CQRS**, and clean
 
 ---
 
-## ✨ Highlighted Features (Tech Market Demands)
-
-This project is built incorporating the most sought-after patterns and technologies:
+## ✨ Highlighted Features
 
 - **🧅 Onion Architecture**: Strict separation of concerns keeping the Domain layer independent of UI and Infrastructure.
 - **🔄 CQRS Pattern (MediatR)**: Command Query Responsibility Segregation to separate read and write operations, making the application highly scalable.

@@ -1,0 +1,97 @@
+# 🏨 Hotel Reservation System Web API
+A robust, scalable, and enterprise-level Hotel Reservation System built with **.NET Core**. This project demonstrates advanced architectural patterns and best practices, specifically tailored to meet the high standards and requirements of modern software engineering markets (like the Egyptian Tech Market).
+The project heavily focuses on **Clean/Onion Architecture**, **CQRS**, and clean code principles to ensure maintainability and testability.
+---
+## ✨ Highlighted Features (Tech Market Demands)
+This project is built incorporating the most sought-after patterns and technologies:
+- **🧅 Onion Architecture**: Strict separation of concerns keeping the Domain layer independent of UI and Infrastructure.
+- **🔄 CQRS Pattern (MediatR)**: Command Query Responsibility Segregation to separate read and write operations, making the application highly scalable.
+- **🛡️ Custom Middlewares**:
+  - `GlobalErrorHandlerMiddleware`: Centralized exception handling to ensure consistent API responses without scattering `try-catch` blocks everywhere.
+  - `TransactionMiddleware`: Automatically manages database transactions per request to ensure data integrity.
+- **🚦 Custom Action Filters**:
+  - `CustomAuthorizeFilter`: Fine-grained role and permission-based authorization.
+- **🗄️ Repository Pattern**: Implementing `GenericRepository` alongside specific repositories (like `RoomRepository`) to decouple data access logic.
+- **🔐 Security**: JWT-based Authentication and Authorization.
+- **🗺️ Object Mapping**: Using `AutoMapper` to map between Domain Entities and DTOs/ViewModels smoothly.
+- **🔍 Pagination, Filtering, and Sorting** *(in progress)*.
+- **🚀 Distributed Caching (Redis)** *(in progress)*.
+- **🧪 Unit and Integration Testing** *(in progress)*.
+---
+## 🏗️ Architecture Decision Records (ADRs) - The "Why" Behind the Code
+> *"Programming is no longer just code that runs.. Programming has become documenting your thinking and architecture for your decisions."*
+Here are the key architectural questions and decisions made during the design phase:
+### 1. Why Onion Architecture over Traditional N-Tier?
+- **Decision:** Use Onion Architecture.
+- **Trade-offs:** N-Tier is easier to set up initially and familiar to beginners. However, it often leads to tight coupling with data access frameworks. Onion architecture requires more initial boilerplate and interfaces.
+- **Advantages:** The Domain layer (business logic) is completely isolated at the center. We can swap out the database (Infrastructure) or the UI (API) without touching the core business rules. 
+- **Disadvantages:** Higher learning curve and more files/folders to manage.
+### 2. Why CQRS with MediatR?
+- **Decision:** Implement Command Query Responsibility Segregation using the MediatR library.
+- **Trade-offs:** Traditional Controller-to-Service architecture is faster to write for simple CRUD operations. CQRS introduces multiple classes (Command/Query, Handler, Validator) for a single operation.
+- **Advantages:** Massive improvement in code readability and Single Responsibility Principle (SRP). Handlers are easily testable. Read operations (Queries) can be optimized independently from Write operations (Commands).
+- **Disadvantages:** Boilerplate code explosion. 
+### 3. Why Custom Middlewares for Error Handling and Transactions?
+- **Decision:** Use `GlobalErrorHandlerMiddleware` and `TransactionMiddleware`.
+- **Trade-offs:** Developers could just use `try/catch` and `transaction.Commit()` in every MediatR handler or Controller.
+- **Advantages:** Keeps the business logic extremely clean. If a command succeeds, the transaction commits. If it fails, it rolls back, and the error middleware catches the exception to format a standardized API error response.
+- **Disadvantages:** Hides control flow slightly; new developers need to understand the middleware pipeline to know how errors and transactions are managed.
+### 4. Future Development & Evolution (What's Next?)
+- **Caching Layer:** Integrating Redis to cache frequent queries (like available rooms) to reduce database load *(in progress)*.
+- **Validation Pipeline:** Implementing FluentValidation integrated with MediatR pipeline behaviors to validate commands before they even hit the handlers *(in progress)*.
+- **Advanced Searching:** Implementing dynamic Expression Trees for complex filtering required by hotel search engines *(in progress)*.
+---
+## 📂 Project Structure
+```text
+HotelReservationSystemWebAPI
+│
+├── 🎯 Domain                  # Core Entities, Enums, and Repository Interfaces (No Dependencies)
+├── ⚙️ Application             # CQRS Handlers, DTOs, AutoMapper Profiles, Business Logic
+├── 🔌 Infrastructure          # EF Core DbContext, Migrations, Repository Implementations
+└── 🌐 HotelReservationSystem.API # Controllers, Middlewares, Filters, Program.cs (Presentation)
+```
+---
+## 🛠️ Technology Stack
+- **Framework:** .NET 8 / 9
+- **Architecture:** Onion Architecture, CQRS
+- **Database:** SQL Server, Entity Framework Core (Code-First)
+- **Libraries:** MediatR, AutoMapper
+- **Security:** JWT (JSON Web Tokens)
+---
+## 🚀 Getting Started
+### Prerequisites
+- .NET SDK (8.0 or later)
+- SQL Server
+### Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Abdelrhman-elsaeed/HotelReservationSystemWebAPI.git
+   ```
+2. Navigate to the API directory:
+   ```bash
+   cd HotelReservationSystemWebAPI/HotelReservationSystem.API
+   ```
+3. Update the Connection String in `appsettings.json` to point to your local SQL Server instance.
+4. Apply database migrations:
+   ```bash
+   dotnet ef database update --project ../Infrastructure --startup-project .
+   ```
+5. Run the application:
+   ```bash
+   dotnet run
+   ```
+---
+## 📌 Roadmap & Status
+- [x] Base Onion Architecture Setup
+- [x] CQRS Implementation with MediatR
+- [x] JWT Authentication & Authorization
+- [x] Custom Middleware (Error Handling & Transactions)
+- [x] Custom Action Filters
+- [x] AutoMapper Configuration
+- [ ] Room & Reservation Advanced CRUD *(in progress)*
+- [ ] Advanced Filtering and Pagination *(in progress)*
+- [ ] Redis Distributed Caching *(in progress)*
+- [ ] FluentValidation Pipeline *(in progress)*
+- [ ] Unit Testing *(in progress)*
+---
+*This README was designed not just to explain how to run the project, but to document the engineering mindset and architectural decisions behind it.*

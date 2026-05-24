@@ -1,6 +1,7 @@
 # 🏨 Hotel Reservation System Web API
 
-A robust, scalable, and enterprise-level Hotel Reservation System built with **.NET Core**. This project demonstrates advanced architectural patterns and best practices, specifically tailored to meet the high standards and requirements of modern software engineering markets (like the Egyptian Tech Market).
+A robust, scalable, and enterprise-level Hotel Reservation System built with **.NET Core**.
+This project demonstrates advanced architectural patterns and best practices, specifically tailored to meet the high standards and requirements of modern software engineering markets.
 
 The project heavily focuses on **Clean/Onion Architecture**, **CQRS**, and clean code principles to ensure maintainability and testability.
 

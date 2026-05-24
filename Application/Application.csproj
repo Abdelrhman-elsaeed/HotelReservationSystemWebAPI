@@ -20,7 +20,6 @@
   <ItemGroup>
     <Folder Include="CQRS\Auth\Queries\" />
     <Folder Include="CQRS\Offer\Queries\" />
-    <Folder Include="CQRS\Reservation\Queries\" />
     <Folder Include="CQRS\RoomOffer\Queries\" />
     <Folder Include="CQRS\RoomPicture\Queries\" />
     <Folder Include="CQRS\User\Queries\" />

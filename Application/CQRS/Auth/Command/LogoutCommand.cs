@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Application.CQRS.Auth.Command
 {
-    public sealed record LogoutCommand(int UserId,CancellationToken CancellationToken) : IRequest<ResponseViewModel<bool>>;
+    public sealed record LogoutCommand(int UserId) : IRequest<ResponseViewModel<bool>>;
     public class LogoutCommandHandler : IRequestHandler<LogoutCommand, ResponseViewModel<bool>>
     {
         private readonly IRepository<Domain.Entities.User.User> _userRepository;

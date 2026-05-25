@@ -30,7 +30,11 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEntireRoom([FromForm] AddRoomTypeVM typeVM,[FromForm] AddRoomDetailsVM detailsVM,[FromForm] AddFacilityVM facilityVM,[FromForm] List<IFormFile> Pictures) 
+        public async Task<IActionResult> AddEntireRoom([FromForm] AddRoomTypeVM typeVM,
+            [FromForm] AddRoomDetailsVM detailsVM,
+            [FromForm] AddFacilityVM facilityVM, 
+            [FromForm] List<IFormFile> Pictures, 
+            CancellationToken cancellationToken)
         {
             var picturesDto = Pictures.ToFileUploadDtos();
 
@@ -39,7 +43,7 @@ namespace HotelReservationSystem.API.Controllers
             var facilityDto = facilityVM.Map<AddFacilityDto>();
 
             var orchestratorCommand = new AddRoomOrchestrator(typeDto, detailsDto, facilityDto, picturesDto);
-            var result = await _Mediator.Send(orchestratorCommand);
+            var result = await _Mediator.Send(orchestratorCommand, cancellationToken);
 
             if (result.IsSuccess)
             {
@@ -50,26 +54,97 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRoomType(AddRoomTypeVM model)
+        public async Task<IActionResult> AddRoomType([FromBody] AddRoomTypeVM model, CancellationToken cancellationToken)
         {
             var RoomTypeDto = model.Map<AddRoomTypeDto>();
-            var result = await _Mediator.Send(new AddRoomTypeCommand(RoomTypeDto));
+            var result = await _Mediator.Send(new AddRoomTypeCommand(RoomTypeDto), cancellationToken);
 
             if (result.IsSuccess)
-                return Ok(ResponseViewModel<AddRoomTypeVM>.Success(result.Data.Map<AddRoomTypeVM>(),result.Message));
-            else
-                return NotFound(ResponseViewModel<AddRoomTypeVM>.Failure(result.ErrorCode, result.Message));
+                return Ok(ResponseViewModel<AddRoomTypeVM>.Success(result.Data.Map<AddRoomTypeVM>(), result.Message));
+
+            return BadRequest(ResponseViewModel<AddRoomTypeVM>.Failure(result.ErrorCode, result.Message));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllRooms([FromForm] DateTime? StartDate, [FromForm] DateTime? EndDate, [FromForm] int? RoomTypeId)
+        public async Task<IActionResult> GetAllRooms([FromQuery] DateTime? StartDate,
+            [FromQuery] DateTime? EndDate,
+            [FromQuery] int? RoomTypeId,
+            CancellationToken cancellationToken)
         {
-            var result = await _Mediator.Send(new GetAllRoomsQuery(StartDate, EndDate, RoomTypeId));
+            var result = await _Mediator.Send(new GetAllRoomsQuery(StartDate, EndDate, RoomTypeId), cancellationToken);
 
             if (result.IsSuccess)
                 return Ok(ResponseViewModel<IEnumerable<GetRoomVM>>.Success(result.Data.Map<IEnumerable<GetRoomVM>>(), result.Message));
-            else
-                return NotFound(ResponseViewModel<IEnumerable<GetRoomVM>>.Failure(result.ErrorCode, result.Message));
+
+            return BadRequest(ResponseViewModel<IEnumerable<GetRoomVM>>.Failure(result.ErrorCode, result.Message));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRoomDetails([FromBody] AddRoomDetailsVM model, CancellationToken cancellationToken)
+        {
+            var RoomDetailsDto = model.Map<AddRoomDetailsDto>();
+            var result = await _Mediator.Send(new AddRoomDetailsCommand(RoomDetailsDto), cancellationToken);
+
+            if (result.IsSuccess)
+                return Ok(ResponseViewModel<AddRoomDetailsVM>.Success(result.Data.Map<AddRoomDetailsVM>(), result.Message));
+
+            return BadRequest(ResponseViewModel<AddRoomDetailsVM>.Failure(result.ErrorCode, result.Message));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateRoomDetails([FromBody] UpdateRoomDetailsVM model, CancellationToken cancellationToken)
+        {
+            var RoomDetailsDto = model.Map<UpdateRoomDetailsDto>();
+            var result = await _Mediator.Send(new UpdateRoomDetailsCommand(RoomDetailsDto), cancellationToken);
+
+            if (result.IsSuccess)
+                return Ok(ResponseViewModel<UpdateRoomDetailsVM>.Success(result.Data.Map<UpdateRoomDetailsVM>(), result.Message));
+
+            if (result.ErrorCode == Application.Enum.ErrorCode.RoomNotFound)
+                return NotFound(ResponseViewModel<UpdateRoomDetailsVM>.Failure(result.ErrorCode, result.Message));
+
+            return BadRequest(ResponseViewModel<UpdateRoomDetailsVM>.Failure(result.ErrorCode, result.Message));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateRoomType([FromBody] UpdateRoomTypeVM model, CancellationToken cancellationToken)
+        {
+            var RoomTypeDto = model.Map<UpdateRoomTypeDto>();
+            var result = await _Mediator.Send(new UpdateRoomTypeCommand(RoomTypeDto), cancellationToken);
+
+            if (result.IsSuccess)
+                return Ok(ResponseViewModel<UpdateRoomTypeVM>.Success(result.Data.Map<UpdateRoomTypeVM>(), result.Message));
+
+            if (result.ErrorCode == Application.Enum.ErrorCode.RoomTypeNotExist)
+                return NotFound(ResponseViewModel<UpdateRoomTypeVM>.Failure(result.ErrorCode, result.Message));
+
+            return BadRequest(ResponseViewModel<UpdateRoomTypeVM>.Failure(result.ErrorCode, result.Message));
+        }
+
+        [HttpGet("{RoomTypeId}")]
+        public async Task<IActionResult> GetRoomType(int RoomTypeId, CancellationToken cancellationToken)
+        {
+            var result = await _Mediator.Send(new GetRoomTypeQuery(RoomTypeId), cancellationToken);
+
+            if (result.IsSuccess)
+                return Ok(ResponseViewModel<GetRoomTypeVM>.Success(result.Data.Map<GetRoomTypeVM>(), result.Message));
+
+            if (result.ErrorCode == Application.Enum.ErrorCode.GetRoomTypeFail)
+                return NotFound(ResponseViewModel<GetRoomTypeVM>.Failure(result.ErrorCode, result.Message));
+
+            return BadRequest(ResponseViewModel<GetRoomTypeVM>.Failure(result.ErrorCode, result.Message));
+        }
+
+        [HttpDelete("{RoomId}")]
+        public async Task<IActionResult> DeleteEntireRoom(int RoomId, CancellationToken cancellationToken)
+        {
+            var orchestratorCommand = new DeleteRoomOrchestrator(RoomId);
+            var result = await _Mediator.Send(orchestratorCommand, cancellationToken);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
         }
     }
 }

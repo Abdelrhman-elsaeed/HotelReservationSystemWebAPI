@@ -17,6 +17,9 @@ namespace Application.AutoMapper.Profiles
         {
             CreateMap<AddReservationRoomDto, ReservationRoom>().ReverseMap();
             CreateMap<AddReservationRoomDto, AddReservationRoomVM>().ReverseMap();
+
+            CreateMap<ReservationRoomDto, ReservationRoomVM>().ReverseMap();
+
         }
     }
 }

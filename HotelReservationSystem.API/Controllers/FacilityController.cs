@@ -33,6 +33,12 @@ namespace HotelReservationSystem.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddFacility([FromBody] AddFacilityVM model, CancellationToken cancellationToken)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var FacilityDto = model.Map<AddFacilityDto>();
             var result = await _Mediator.Send(new AddFacilityCommand(FacilityDto), cancellationToken);
 
@@ -45,6 +51,11 @@ namespace HotelReservationSystem.API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateFacility([FromBody] UpdateFacilityVM model, CancellationToken cancellationToken)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var FacilityDto = model.Map<UpdateFacilityDto>();
             var result = await _Mediator.Send(new UpdateFacilityCommand(FacilityDto), cancellationToken);
 
@@ -60,6 +71,11 @@ namespace HotelReservationSystem.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteFacility([FromBody] DeleteFacilityVM model, CancellationToken cancellationToken)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var FacilityDto = model.Map<DeleteFacilityDto>();
             var result = await _Mediator.Send(new DeleteFacilityCommand(FacilityDto), cancellationToken);
 

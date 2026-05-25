@@ -15,7 +15,7 @@ using System.Text;
 
 namespace Application.CQRS.ReservationRoom.Orchestrators
 {
-    public sealed record UpdateReservationOrchestratorCommand(UpdateReservationDto model) : IRequest<ResponseViewModel<ReservationReceiptDto>>;
+    public sealed record UpdateReservationOrchestratorCommand(UpdateReservationDto model,CancellationToken CancellationToken) : IRequest<ResponseViewModel<ReservationReceiptDto>>;
     public class UpdateReservationOrchestratorCommandHandler : IRequestHandler<UpdateReservationOrchestratorCommand, ResponseViewModel<ReservationReceiptDto>>
     {
         private readonly IMediator _mediator;

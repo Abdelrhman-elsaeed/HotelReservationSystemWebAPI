@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Application.CQRS.Auth.Command
 {
-    public sealed record LogoutCommand(int UserId) : IRequest<ResponseViewModel<bool>>;
+    public sealed record LogoutCommand(int UserId,CancellationToken CancellationToken) : IRequest<ResponseViewModel<bool>>;
     public class LogoutCommandHandler : IRequestHandler<LogoutCommand, ResponseViewModel<bool>>
     {
         private readonly IRepository<Domain.Entities.User.User> _userRepository;
@@ -26,6 +26,8 @@ namespace Application.CQRS.Auth.Command
 
             user.RefreshToken = null;
             user.RefreshTokenExpiryTime = null;
+
+            _userRepository.UpdateInclude(user, nameof(Domain.Entities.User.User.RefreshToken), nameof(Domain.Entities.User.User.RefreshTokenExpiryTime));
 
             var IsSaved = await _userRepository.SaveChangesAsync(cancellationToken);
 

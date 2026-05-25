@@ -43,6 +43,8 @@ namespace Application.CQRS.Auth.Command
 
             user.RefreshToken = refreshToken;
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+
+            _userRepository.UpdateInclude(user, nameof(Domain.Entities.User.User.RefreshToken), nameof(Domain.Entities.User.User.RefreshTokenExpiryTime));
             await _userRepository.SaveChangesAsync(cancellationToken);
 
 

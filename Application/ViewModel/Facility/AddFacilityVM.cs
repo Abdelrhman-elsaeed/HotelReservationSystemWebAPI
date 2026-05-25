@@ -7,6 +7,7 @@ namespace Application.ViewModel.Facility
 {
     public class AddFacilityVM
     {
+        public int? ID { get; set; }
         [Required(ErrorMessage = "Facility name is required.")]
         [StringLength(100, ErrorMessage = "Facility name cannot exceed 100 characters.")]
         public string Name { get; set; }

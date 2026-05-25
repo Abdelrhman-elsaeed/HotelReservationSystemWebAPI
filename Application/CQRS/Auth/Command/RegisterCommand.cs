@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Application.CQRS.Auth.Command
 {
-    public sealed record RegisterCommand(RegisterDto model,CancellationToken CancellationToken) : IRequest<ResponseViewModel<RegisterResponseDto>>;
+    public sealed record RegisterCommand(RegisterDto model) : IRequest<ResponseViewModel<RegisterResponseDto>>;
 
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ResponseViewModel<RegisterResponseDto>>
     {

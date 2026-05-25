@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Application.CQRS.Reservation.Command
 {
-    public sealed record CancelReservationCommand(int ReservationId,CancellationToken cancellationToken) : IRequest<ResponseViewModel<bool>>;
+    public sealed record CancelReservationCommand(int ReservationId) : IRequest<ResponseViewModel<bool>>;
     public class CancelReservationCommandHandler : IRequestHandler<CancelReservationCommand, ResponseViewModel<bool>>
     {
         private readonly IRepository<Domain.Entities.ReservationManagement.Reservation> _repository;

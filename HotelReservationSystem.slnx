@@ -4,6 +4,7 @@
     <Project Path="Domain/Domain.csproj" />
   </Folder>
   <Folder Name="/Persistence/">
+    <Project Path="Hotel.UnitTests/Hotel.UnitTests.csproj" Id="3d0ecd99-9759-4e3d-83dc-5573fa570d3d" />
     <Project Path="HotelReservationSystem.API/HotelReservationSystem.API.csproj" />
     <Project Path="Infrastructure/Infrastructure.csproj" />
   </Folder>

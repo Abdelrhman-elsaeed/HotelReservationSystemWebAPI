@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
+![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-12-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)
 ![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
@@ -19,7 +19,7 @@
 
 ## 📖 Overview
 
-**Hotel Reservation System** is a robust backend API designed for managing hotel operations, including room inventory, guest reservations, dynamic pricing/offers, and facility management. Built with **.NET 8**, **Onion Architecture**, and the **CQRS Pattern** (via MediatR), it ensures strict separation of concerns, high testability, and enterprise-grade scalability.
+**Hotel Reservation System** is a robust backend API designed for managing hotel operations, including room inventory, guest reservations, dynamic pricing/offers, and facility management. Built with **.NET 10**, **Onion Architecture**, and the **CQRS Pattern** (via MediatR), it ensures strict separation of concerns, high testability, and enterprise-grade scalability.
 
 ---
 
@@ -213,7 +213,7 @@ erDiagram
 
 | Technology | Purpose |
 |------------|---------|
-| **.NET 8 / ASP.NET Core** | Web API framework |
+| **.NET 10 / ASP.NET Core** | Web API framework |
 | **Entity Framework Core** | ORM + Code-First migrations |
 | **SQL Server** | Primary database |
 | **MediatR** | CQRS implementation (Commands/Queries orchestrator) |
@@ -312,7 +312,7 @@ Passed!  - Failed: 0, Passed: 82, Skipped: 0, Total: 82
 ## 🚀 Getting Started
 
 ### Prerequisites
-- .NET SDK (8.0 or later)
+- .NET SDK (10.0 or later)
 - SQL Server
 
 ### Setup
@@ -360,6 +360,6 @@ Passed!  - Failed: 0, Passed: 82, Skipped: 0, Total: 82
 
 **⭐ Star this repository if you find it helpful!**
 
-Made with ❤️ using .NET 8
+Made with ❤️ using .NET 10
 
 </div>

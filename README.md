@@ -101,6 +101,24 @@ Hotel.UnitTests/
 | **coverlet.collector** | Code coverage data collection |
 | **ReportGenerator** | HTML coverage report generation |
 ---
+## ✅ Test Results Summary
+```
+Passed!  - Failed: 0, Passed: 82, Skipped: 0, Total: 82
+```
+| Test File | Tests | Handlers Covered |
+|---|---|---|
+| `Facility_Test.cs` | 9 | Add, Update, Delete, GetById |
+| `RoomType_Test.cs` | 8 | Add, Update, CheckExist |
+| `Room_Test.cs` | 17 | Add, Update, Delete, GetRoomType, IsRoomExist, GetTotalPrice |
+| `Guest_Test.cs` | 12 | Add, Update, Delete, GetGuest, IsGuestExist |
+| `Offer_Test.cs` | 2 | AddOffer |
+| `Reservation_Test.cs` | 9 | Cancel, UpdateDetails, GetById |
+| `AddRoomOrchestrator_Test.cs` | 7 | 5-step chain + data-flow verification |
+| `DeleteRoomOrchestrator_Test.cs` | 4 | 3-step chain |
+| `AddOfferOrchestrator_Test.cs` | 5 | 3-step chain + data-flow verification |
+| `UpdateReservationOrchestrator_Test.cs` | 6 | 3-step chain + status guards |
+| **Total** | **82** | |
+---
 ### Categories
 | Category | Meaning |
 |---|---|

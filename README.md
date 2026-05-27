@@ -1,8 +1,6 @@
 # 🏨 Hotel Reservation System Web API
 
-A robust, scalable, and enterprise-level Hotel Reservation System built with **.NET Core**.
-This project demonstrates advanced architectural patterns and best practices, specifically tailored to meet the high standards and requirements of modern software engineering markets.
-
+Hotel Reservation System built with **.NET Core**.
 The project heavily focuses on **Clean/Onion Architecture**, **CQRS**, and clean code principles to ensure maintainability and testability.
 
 ---
@@ -69,7 +67,7 @@ HotelReservationSystemWebAPI
    ```
 ---
 ## 🛠️ Technology Stack
-- **Framework:** .NET 8 / 9
+- **Framework:** .NET 10
 - **Architecture:** Onion Architecture, CQRS
 - **Database:** SQL Server, Entity Framework Core (Code-First)
 - **Libraries:** MediatR, AutoMapper
@@ -138,10 +136,8 @@ Hotel.UnitTests/
 - [x] Custom Middleware (Error Handling & Transactions)
 - [x] Custom Action Filters
 - [x] AutoMapper Configuration
-- [ ] Room & Reservation Advanced CRUD *(in progress)*
-- [ ] Advanced Filtering and Pagination *(in progress)*
+- [x] Unit Testing *(in progress)*
 - [ ] Redis Distributed Caching *(in progress)*
 - [ ] FluentValidation Pipeline *(in progress)*
-- [ ] Unit Testing *(in progress)*
 ---
 *This README was designed not just to explain how to run the project, but to document the engineering mindset and architectural decisions behind it.*

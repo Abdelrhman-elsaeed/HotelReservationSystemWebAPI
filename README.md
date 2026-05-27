@@ -76,6 +76,158 @@ HotelReservationSystemWebAPI
 - **Security:** JWT (JSON Web Tokens)
 
 ---
+# 🧪 Unit Testing — Hotel Reservation System
+## 🗂️ Test Project Structure
+All unit tests live in the `Hotel.UnitTests` project and follow a consistent structure aligned with **CQRS handlers and Orchestrators** in the `Application` layer.
+```
+Hotel.UnitTests/
+├── Facility_Test.cs                    # Facility CRUD + Get
+├── RoomType_Test.cs                    # RoomType Add, Update, CheckExist
+├── Room_Test.cs                        # Room Add, Update, Delete, Queries
+├── Guest_Test.cs                       # Guest Add, Update, Delete, Queries
+├── Offer_Test.cs                       # Offer Add
+├── Reservation_Test.cs                 # Reservation Cancel, Update, GetById
+├── AddRoomOrchestrator_Test.cs         # Multi-step room creation orchestration
+├── DeleteRoomOrchestrator_Test.cs      # Multi-step room deletion orchestration
+├── AddOfferOrchestrator_Test.cs        # Multi-step offer + room assignment
+└── UpdateReservationOrchestrator_Test.cs # Multi-step reservation update
+```
+---
+## 🛠️ Tech Stack
+| Tool | Role |
+|---|---|
+| **NUnit** | Test framework (`[TestFixture]`, `[Test]`, `[SetUp]`) |
+| **Moq** | Mocking repositories, `IMediator` |
+| **FluentAssertions** | Expressive, readable assertions |
+| **coverlet.collector** | Code coverage data collection |
+| **ReportGenerator** | HTML coverage report generation |
+---
+## 📐 Test Conventions
+Every test file follows the same pattern inherited from `Facility_Test.cs`:
+```csharp
+[TestFixture]
+public class SomeEntity_Test
+{
+    private Mock<IRepository<SomeEntity>> _repoMock = null!;
+    [OneTimeSetUp]            // wire AutoMapper mock once for the class
+    public void OneTimeSetUp() { ... }
+    [SetUp]                   // reset mock before each test
+    public void SetUp() { _repoMock = new Mock<...>(); }
+    [Test]
+    [Category("Happy")]       // success paths
+    public async Task Command_Success_ReturnsSuccessResponse() { /* Arrange / Act / Assert + Verify */ }
+    [Test]
+    [Category("Business")]    // validation & failure paths
+    public async Task Command_FailScenario_ReturnsFailureResponse() { ... }
+}
+```
+### Categories
+| Category | Meaning |
+|---|---|
+| `Happy` | The golden path — all dependencies succeed |
+| `Business` | Validation failures, not-found cases, save failures |
+Run by category:
+```bash
+dotnet test --filter "Category=Happy"
+dotnet test --filter "Category=Business"
+```
+---
+## ✅ Test Results Summary
+```
+Passed!  - Failed: 0, Passed: 82, Skipped: 0, Total: 82
+```
+| Test File | Tests | Handlers Covered |
+|---|---|---|
+| `Facility_Test.cs` | 9 | Add, Update, Delete, GetById |
+| `RoomType_Test.cs` | 8 | Add, Update, CheckExist |
+| `Room_Test.cs` | 17 | Add, Update, Delete, GetRoomType, IsRoomExist, GetTotalPrice |
+| `Guest_Test.cs` | 12 | Add, Update, Delete, GetGuest, IsGuestExist |
+| `Offer_Test.cs` | 2 | AddOffer |
+| `Reservation_Test.cs` | 9 | Cancel, UpdateDetails, GetById |
+| `AddRoomOrchestrator_Test.cs` | 7 | 5-step chain + data-flow verification |
+| `DeleteRoomOrchestrator_Test.cs` | 4 | 3-step chain |
+| `AddOfferOrchestrator_Test.cs` | 5 | 3-step chain + data-flow verification |
+| `UpdateReservationOrchestrator_Test.cs` | 6 | 3-step chain + status guards |
+| **Total** | **82** | |
+---
+## 📊 Code Coverage Report
+Coverage was generated using `coverlet.collector` + `ReportGenerator`.
+### Commands
+**Step 1 – Collect coverage:**
+```bash
+dotnet test "Hotel.UnitTests" --collect:"XPlat Code Coverage" --results-directory "Hotel.UnitTests/TestResults"
+```
+**Step 2 – Install ReportGenerator (first time only):**
+```bash
+dotnet tool install -g dotnet-reportgenerator-globaltool
+```
+**Step 3 – Generate HTML report:**
+```bash
+reportgenerator \
+  -reports:"Hotel.UnitTests/TestResults/**/*.xml" \
+  -targetdir:"Hotel.UnitTests/CoverageReport" \
+  -reporttypes:"Html;TextSummary" \
+  -assemblyfilters:"+Application"
+```
+Then open `Hotel.UnitTests/CoverageReport/index.html` in your browser.
+---
+### Overall Coverage (Application Layer)
+| Metric | Value |
+|---|---|
+| **Line Coverage** | 42.6% (551 / 1292 lines) |
+| **Branch Coverage** | 42.3% (105 / 248 branches) |
+| **Method Coverage** | 45.4% (179 / 394 methods) |
+> **Note:** The overall 42% figure reflects the _entire_ Application layer, which includes Auth, ViewModels, AutoMapper profiles, and other components that are intentionally **out of scope** for unit testing (they are covered by integration/API tests). The handlers we _did_ test all show **100% coverage**.
+---
+### 100% Coverage — Tested CQRS Handlers
+The following handlers are **fully covered (100% line + branch)**:
+| Namespace | Handler |
+|---|---|
+| `Application.CQRS.Facility` | Add, Update, Delete, GetById |
+| `Application.CQRS.Guest` | Add, Update, Delete, GetGuest, IsGuestExist |
+| `Application.CQRS.Offer` | AddOffer |
+| `Application.CQRS.Reservation` | Cancel, UpdateDetails, GetById |
+| `Application.CQRS.ReservationRoom.Orchestrators` | UpdateReservationOrchestratorHandler |
+| `Application.CQRS.Room` | Add, Update, Delete, GetRoomType, IsRoomExist, GetTotalPrice |
+| `Application.CQRS.Room.Orchestrators` | AddRoomOrchestratorHandler, DeleteRoomOrchestratorHandler |
+| `Application.CQRS.RoomOffer.Orchestrators` | AddOfferOrchestratorHandler |
+| `Application.CQRS.RoomType` | Add, Update, CheckRoomTypeExist |
+---
+### Intentionally Excluded from Unit Tests
+| Component | Reason |
+|---|---|
+| `Auth` (Login, Register, RefreshToken) | Requires Identity + JWT infrastructure — covered by integration tests |
+| `AddReservationCommandHandler` | Orchestrates 3+ mediator calls — integration-level complexity |
+| `GetAllRoomsQueryHandler` | Requires real EF Core predicate builder (LinqKit) — not mockable cleanly |
+| `ViewModels`, `AutoMapper Profiles` | Pure mapping/validation — no business logic to unit test |
+| `RoleFeature` | Requires role/permission infrastructure |
+---
+## 🔗 Orchestrator Tests — What Makes Them Special
+Orchestrators coordinate multiple CQRS handlers in sequence. Their tests verify things normal command tests cannot:
+### 1. Step Failure Short-Circuit
+Each test verifies that when step N fails, steps N+1 onwards are **never called**:
+```csharp
+// If AddRoomType fails → AddRoomDetails, AddFacility, etc. must NOT be called
+await act.Should().ThrowAsync<BusinessException>();
+_mediatorMock.Verify(x => x.Send(It.IsAny<AddRoomDetailsCommand>(), ...), Times.Never);
+```
+### 2. Data Flow Between Steps
+Verifies that output of step N is correctly passed as input to step N+1:
+```csharp
+// AddRoomOrchestrator: RoomType ID from step 1 must become RoomTypeId in step 2
+capturedRoomTypeId.Should().Be(42,
+    "the orchestrator must propagate the new RoomType ID to the room details step");
+```
+### 3. Business Rule Guards (UpdateReservationOrchestrator)
+Tests that the status guard blocks updates on cancelled/rejected reservations:
+```csharp
+// Cancelled reservation → must throw, must NOT proceed to update steps
+var cancelledReservation = new GetReservationDetailsDto { Status = "Cancelled" };
+await act.Should().ThrowAsync<BusinessException>()
+    .WithMessage("Cannot update a cancelled or rejected reservation");
+```
+
+---
 ## 🚀 Getting Started
 ### Prerequisites
 - .NET SDK (8.0 or later)

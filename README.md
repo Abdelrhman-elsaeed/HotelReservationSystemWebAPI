@@ -74,7 +74,7 @@ HotelReservationSystemWebAPI
 - **Security:** JWT (JSON Web Tokens)
 
 ---
-# 🧪 Unit Testing — Hotel Reservation System
+# 🧪 Unit Testing
 ## 🗂️ Test Project Structure
 All unit tests live in the `Hotel.UnitTests` project and follow a consistent structure aligned with **CQRS handlers and Orchestrators** in the `Application` layer.
 ```

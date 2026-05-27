@@ -136,7 +136,7 @@ Hotel.UnitTests/
 - [x] Custom Middleware (Error Handling & Transactions)
 - [x] Custom Action Filters
 - [x] AutoMapper Configuration
-- [x] Unit Testing *(in progress)*
+- [x] Unit Testing
 - [ ] Redis Distributed Caching *(in progress)*
 - [ ] FluentValidation Pipeline *(in progress)*
 ---

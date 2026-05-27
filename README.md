@@ -63,7 +63,8 @@ HotelReservationSystemWebAPI
 ├── 🎯 Domain                  # Core Entities, Enums, and Repository Interfaces (No Dependencies)
 ├── ⚙️ Application             # CQRS Handlers, DTOs, AutoMapper Profiles, Business Logic
 ├── 🔌 Infrastructure          # EF Core DbContext, Migrations, Repository Implementations
-└── 🌐 HotelReservationSystem.API # Controllers, Middlewares, Filters, Program.cs (Presentation)
+├── 🌐 HotelReservationSystem.API # Controllers, Middlewares, Filters, Program.cs (Presentation)
+└── 🧪 Hotel.UnitTests
    ```
 ---
 ## 🛠️ Technology Stack

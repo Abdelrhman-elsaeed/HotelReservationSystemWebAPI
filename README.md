@@ -9,7 +9,7 @@
 ![Tests](https://img.shields.io/badge/Tests-82%20Passing-brightgreen?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-**A highly maintainable, scalable, and testable Hotel Reservation API built on Clean/Onion Architecture and CQRS**
+**A highly maintainable, scalable, and testable Hotel Reservation API built on Onion Architecture and CQRS**
 
 [Features](#-highlighted-features) • [Architecture & ADRs](#-architecture-decision-records-adrs) • [Database](#️-database) • [Testing](#-unit-testing) • [Getting Started](#-getting-started)
 

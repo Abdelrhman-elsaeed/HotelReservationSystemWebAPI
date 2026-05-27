@@ -17,7 +17,7 @@ The project heavily focuses on **Clean/Onion Architecture**, **CQRS**, and clean
 - **🗄️ Repository Pattern**: Implementing `GenericRepository` alongside specific repositories (like `RoomRepository`) to decouple data access logic.
 - **🔐 Security**: JWT-based Authentication and Authorization.
 - **🗺️ Object Mapping**: Using `AutoMapper` to map between Domain Entities and DTOs/ViewModels smoothly.
-- **🔍 Pagination, Filtering.
+- **🔍 Pagination, Filtering**.
 - **🚀 Distributed Caching (Redis)** *(in progress)*.
 - **🧪 Unit and Integration Testing** *(in progress)*.
 

@@ -9,7 +9,10 @@ using Application.Enum;
 using Application.ViewModel.Auth;
 using Application.ViewModel.Receipt;
 using Application.ViewModel.Reservation;
+using Domain.Enum;
+using HotelReservationSystem.API.Filters;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,6 +46,8 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPost("{UserId}")]
+        [Authorize]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.Logout })]
         public async Task<IActionResult> Logout(int UserId, CancellationToken cancellationToken)
         {
             var result = await _Mediator.Send(new LogoutCommand(UserId), cancellationToken);

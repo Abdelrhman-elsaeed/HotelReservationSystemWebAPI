@@ -13,7 +13,10 @@ using Application.ViewModel.Auth;
 using Application.ViewModel.Guest;
 using Application.ViewModel.Receipt;
 using Application.ViewModel.Reservation;
+using Domain.Enum;
+using HotelReservationSystem.API.Filters;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +24,7 @@ namespace HotelReservationSystem.API.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class GuestController : ControllerBase
     {
         private readonly IMediator _Mediator;
@@ -31,6 +35,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.AddGuest })]
         public async Task<IActionResult> AddGuest([FromBody] AddGuestVM model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -48,6 +53,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.UpdateGuest })]
         public async Task<IActionResult> UpdateGuest([FromBody] UpdateGuestVM model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -68,6 +74,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.DeleteGuest })]
         public async Task<IActionResult> DeleteGuest(int id, CancellationToken cancellationToken)
         {
             var result = await _Mediator.Send(new DeleteGuestCommand(id), cancellationToken);
@@ -82,6 +89,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.GetGuest })]
         public async Task<IActionResult> GetGuest(int id, CancellationToken cancellationToken)
         {
             var result = await _Mediator.Send(new GetGuestQuery(id), cancellationToken);

@@ -11,8 +11,11 @@ using Application.DTOS.RoomType;
 using Application.ViewModel.Facility;
 using Application.ViewModel.Room;
 using Application.ViewModel.RoomType;
+using Domain.Enum;
+using HotelReservationSystem.API.Filters;
 using HotelReservationSystem.API.Helper.Extension; 
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -20,6 +23,7 @@ namespace HotelReservationSystem.API.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class RoomController : ControllerBase
     {
         private readonly IMediator _Mediator;
@@ -30,6 +34,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.AddEntireRoom })]
         public async Task<IActionResult> AddEntireRoom([FromForm] AddRoomTypeVM typeVM,
             [FromForm] AddRoomDetailsVM detailsVM,
             [FromForm] AddFacilityVM facilityVM, 
@@ -54,6 +59,8 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPost]
+
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.AddRoomType })]
         public async Task<IActionResult> AddRoomType([FromBody] AddRoomTypeVM model, CancellationToken cancellationToken)
         {
             var RoomTypeDto = model.Map<AddRoomTypeDto>();
@@ -66,6 +73,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.GetAllRooms })]
         public async Task<IActionResult> GetAllRooms([FromQuery] DateTime? StartDate,
             [FromQuery] DateTime? EndDate,
             [FromQuery] int? RoomTypeId,
@@ -80,6 +88,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.AddRoomDetails })]
         public async Task<IActionResult> AddRoomDetails([FromBody] AddRoomDetailsVM model, CancellationToken cancellationToken)
         {
             var RoomDetailsDto = model.Map<AddRoomDetailsDto>();
@@ -92,6 +101,8 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPut]
+
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.UpdateRoomDetails })]
         public async Task<IActionResult> UpdateRoomDetails([FromBody] UpdateRoomDetailsVM model, CancellationToken cancellationToken)
         {
             var RoomDetailsDto = model.Map<UpdateRoomDetailsDto>();
@@ -107,6 +118,8 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPut]
+
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.UpdateRoomType })]
         public async Task<IActionResult> UpdateRoomType([FromBody] UpdateRoomTypeVM model, CancellationToken cancellationToken)
         {
             var RoomTypeDto = model.Map<UpdateRoomTypeDto>();
@@ -122,6 +135,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpGet("{RoomTypeId}")]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.GetRoomType })]
         public async Task<IActionResult> GetRoomType(int RoomTypeId, CancellationToken cancellationToken)
         {
             var result = await _Mediator.Send(new GetRoomTypeQuery(RoomTypeId), cancellationToken);
@@ -136,6 +150,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpDelete("{RoomId}")]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.DeleteEntireRoom })]
         public async Task<IActionResult> DeleteEntireRoom(int RoomId, CancellationToken cancellationToken)
         {
             var orchestratorCommand = new DeleteRoomOrchestrator(RoomId);

@@ -9,13 +9,17 @@ using Application.ViewModel.Auth;
 using Application.ViewModel.Receipt;
 using Application.ViewModel.Reservation;
 using Application.ViewModel.User;
+using Domain.Enum;
+using HotelReservationSystem.API.Filters;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservationSystem.API.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IMediator _Mediator;
@@ -26,6 +30,8 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPost]
+
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.AddUser })]
         public async Task<IActionResult> AddUser(AddUserVM model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)

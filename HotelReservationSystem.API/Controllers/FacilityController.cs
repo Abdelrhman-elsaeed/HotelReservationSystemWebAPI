@@ -54,6 +54,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.UpdateFacility })]
         public async Task<IActionResult> UpdateFacility([FromBody] UpdateFacilityVM model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -74,6 +75,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpDelete]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.DeleteFacility })]
         public async Task<IActionResult> DeleteFacility([FromBody] DeleteFacilityVM model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -94,6 +96,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.GetFacility })]
         public async Task<IActionResult> GetFacility(int id, CancellationToken cancellationToken)
         {
             var result = await _Mediator.Send(new GetFacilityQuery(id), cancellationToken);

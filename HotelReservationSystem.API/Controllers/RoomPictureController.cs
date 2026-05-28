@@ -4,8 +4,11 @@ using Application.CQRS.RoomPicture.Command;
 using Application.DTOS;
 using Application.DTOS.Room;
 using Application.ViewModel.Room;
+using Domain.Enum;
+using HotelReservationSystem.API.Filters;
 using HotelReservationSystem.API.Helper.Extension;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +16,7 @@ namespace HotelReservationSystem.API.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class RoomPictureController : ControllerBase
     {
         private readonly IMediator _Mediator;
@@ -23,6 +27,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.UploadImages })]
         public async Task<IActionResult> UploadImages([FromForm] UploadRoomPicturesVM viewModel,CancellationToken cancellationToken)
         {
             var picturesDtoList = viewModel.Pictures.ToFileUploadDtos();

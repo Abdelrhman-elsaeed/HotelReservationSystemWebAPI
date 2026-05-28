@@ -6,9 +6,15 @@ namespace Domain.Enum
 {
     public enum Feature
     {
+        //Facility Feature
+        AddFacility=0,
+
+
         //Room Features
 
 
         //Reservation Features
+
+
     }
 }

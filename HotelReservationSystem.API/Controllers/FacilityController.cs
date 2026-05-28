@@ -13,7 +13,10 @@ using Application.ViewModel.Auth;
 using Application.ViewModel.Facility;
 using Application.ViewModel.Receipt;
 using Application.ViewModel.Reservation;
+using Domain.Enum;
+using HotelReservationSystem.API.Filters;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +24,7 @@ namespace HotelReservationSystem.API.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class FacilityController : ControllerBase
     {
         private readonly IMediator _Mediator;
@@ -31,6 +35,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.AddFacility})]
         public async Task<IActionResult> AddFacility([FromBody] AddFacilityVM model, CancellationToken cancellationToken)
         {
 

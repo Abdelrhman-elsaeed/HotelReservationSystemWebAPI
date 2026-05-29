@@ -270,7 +270,6 @@ mindmap
     Offers
       POST /Offers
 ```
-*(Interactive Swagger documentation available at `/swagger` when running locally)*
 
 ---
 

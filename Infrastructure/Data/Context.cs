@@ -29,6 +29,7 @@ namespace Infrastructure.Data
 
         // UserManagement Entities
         public DbSet<User> Users { get; set; }
+        public DbSet<RoleFeature> RoleFeatures { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

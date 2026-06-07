@@ -78,6 +78,8 @@ namespace HotelReservationSystem.API
             builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
             builder.Services.AddScoped<TransactionMiddleware>();
 
+            builder.Services.AddMemoryCache();
+
             var app = builder.Build();
 
             app.UseMiddleware<GlobalErrorHandlerMiddleware>();

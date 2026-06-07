@@ -1,11 +1,11 @@
 ﻿using Application.AutoMapper.Profiles;
 using Application.DTOS;
 using Application.DTOS.RoleFeature;
+using Application.Helper.Caching;
 using Domain.Repositories.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.Extensions.Caching.Memory;
+
 
 namespace Application.CQRS.RoleFeature.Command
 {
@@ -14,9 +14,11 @@ namespace Application.CQRS.RoleFeature.Command
     public class AssignFeatureToRoleCommandHandler:IRequestHandler<AssignFeatureToRoleCommand, ResponseViewModel<AssignFeatureToRoleDto>>
     {
         private readonly IRepository<Domain.Entities.User.RoleFeature> _Repository;
-        public AssignFeatureToRoleCommandHandler(IRepository<Domain.Entities.User.RoleFeature> Repository)
+        private readonly IMemoryCache _memoryCache;
+        public AssignFeatureToRoleCommandHandler(IRepository<Domain.Entities.User.RoleFeature> Repository, IMemoryCache memoryCache)
         {
             _Repository = Repository;
+            _memoryCache = memoryCache;
         }
 
         public async Task<ResponseViewModel<AssignFeatureToRoleDto>> Handle(AssignFeatureToRoleCommand request, CancellationToken cancellationToken)
@@ -34,6 +36,10 @@ namespace Application.CQRS.RoleFeature.Command
 
             if (!IsSaved)
                 return ResponseViewModel<AssignFeatureToRoleDto>.Failure(Enum.ErrorCode.AssignFeatureToRoleFail, message: "Fail to assign feature to this role");
+
+
+            _memoryCache.Remove(RoleFeatureCacheKeys.RoleFeaturesDictionary);
+
 
             return ResponseViewModel<AssignFeatureToRoleDto>.Success(AddedEntity.Map<AssignFeatureToRoleDto>(), message: "Feature assigned successfully");
         }

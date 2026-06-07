@@ -7,7 +7,10 @@ using Application.DTOS.Reservation;
 using Application.Enum;
 using Application.ViewModel.Receipt;
 using Application.ViewModel.Reservation;
+using Domain.Enum;
+using HotelReservationSystem.API.Filters;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
@@ -16,6 +19,7 @@ namespace HotelReservationSystem.API.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class ReservationController : ControllerBase
     {
         private readonly IMediator _Mediator;
@@ -26,6 +30,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.AddReservation })]
         public async Task<IActionResult> AddReservation([FromBody] AddReservationVM model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -44,6 +49,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.UpdateReservation })]
         public async Task<IActionResult> UpdateReservation([FromBody] UpdateReservationVM model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -65,6 +71,7 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpPut("{ReservationId}")]
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.CancelReservation })]
         public async Task<IActionResult> CancelReservation(int ReservationId, CancellationToken cancellationToken)
         {
             var result = await _Mediator.Send(new CancelReservationCommand(ReservationId), cancellationToken);
@@ -79,6 +86,8 @@ namespace HotelReservationSystem.API.Controllers
         }
 
         [HttpGet("{ReservationId}")]
+
+        [TypeFilter(typeof(CustomAuthorizeFilter), Arguments = new object[] { Feature.GetReservation })]
         public async Task<IActionResult> GetReservation(int ReservationId, CancellationToken cancellationToken)
         {
             var result = await _Mediator.Send(new GetReservationByIdQuery(ReservationId), cancellationToken);

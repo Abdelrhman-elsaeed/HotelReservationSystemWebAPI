@@ -347,6 +347,7 @@ Passed!  - Failed: 0, Passed: 82, Skipped: 0, Total: 82
 - [x] Custom Action Filters
 - [x] AutoMapper Configuration
 - [x] Unit Testing for all Application Logic
+- [x] In Memory Cashing
 - [ ] Redis Distributed Caching *(in progress)*
 - [ ] FluentValidation Pipeline *(in progress)*
 

@@ -18,8 +18,7 @@
 ---
 
 ## 📖 Overview
-
-**Hotel Reservation System** is a robust backend API designed for managing hotel operations, including room inventory, guest reservations, dynamic pricing/offers, and facility management. Built with **.NET 10**, **Onion Architecture**, and the **CQRS Pattern** (via MediatR), it ensures strict separation of concerns, high testability, and enterprise-grade scalability.
+Hotel Reservation System is a backend API built to manage the core operations of a hotel, including room availability, guest reservations, pricing and special offers, and facility management. The project is designed with Onion Architecture and CQRS using MediatR to keep the codebase clean, maintainable, and easy to scale. It provides a solid foundation for building real-world hospitality systems with clear separation between business logic, application flow, and infrastructure concerns.
 
 ---
 
@@ -270,7 +269,6 @@ mindmap
     Offers
       POST /Offers
 ```
-*(Interactive Swagger documentation available at `/swagger` when running locally)*
 
 ---
 

@@ -35,6 +35,7 @@ Hotel Reservation System is a backend API built to manage the core operations of
 - **🔐 Security**: JWT-based Authentication and Authorization with Refresh Tokens.
 - **🗺️ Object Mapping**: Using `AutoMapper` to map between Domain Entities and DTOs/ViewModels smoothly.
 - **🔍 Advanced Queries**: Pagination, Filtering, and Orchestrator-driven complex flows (e.g., `AddRoomOrchestrator`, `UpdateReservationOrchestrator`).
+- **⚡ In-Memory Caching**: Implemented for frequently accessed data like `RoleFeature` authorization to reduce database load.
 - **🚀 Distributed Caching (Redis)** *(in progress)*.
 - **🧪 Comprehensive Unit Testing**: Over 80+ tests validating orchestrators and handlers.
 
@@ -91,7 +92,7 @@ Here are the key architectural questions and decisions made during the design ph
 - **Disadvantages:** Hides control flow slightly; new developers need to understand the middleware pipeline.
 
 ### 4. Future Development & Evolution (What's Next?)
-- **Caching Layer:** Integrating Redis to cache frequent queries (like available rooms) to reduce database load *(in progress)*.
+- **Caching Layer:** Implemented In-Memory caching for `RoleFeature` to optimize authorization checks. Integrating Redis to cache frequent queries (like available rooms) to reduce database load *(in progress)*.
 - **Validation Pipeline:** Implementing FluentValidation integrated with MediatR pipeline behaviors to validate commands before they even hit the handlers *(in progress)*.
 - **Advanced Searching:** Implementing dynamic Expression Trees for complex filtering required by hotel search engines *(in progress)*.
 
@@ -217,6 +218,7 @@ erDiagram
 | **SQL Server** | Primary database |
 | **MediatR** | CQRS implementation (Commands/Queries orchestrator) |
 | **AutoMapper** | Object-to-object mapping (Entities ↔ DTOs) |
+| **IMemoryCache** | Fast local in-memory caching for role/feature permissions |
 | **Redis** *(WIP)* | Distributed caching for fast lookups |
 | **JWT** | Secure authentication and authorization |
 
@@ -347,7 +349,7 @@ Passed!  - Failed: 0, Passed: 82, Skipped: 0, Total: 82
 - [x] Custom Action Filters
 - [x] AutoMapper Configuration
 - [x] Unit Testing for all Application Logic
-- [x] In Memory Caching
+- [x] In-Memory Caching (RoleFeature authorization)
 - [ ] Redis Distributed Caching *(in progress)*
 - [ ] FluentValidation Pipeline *(in progress)*
 

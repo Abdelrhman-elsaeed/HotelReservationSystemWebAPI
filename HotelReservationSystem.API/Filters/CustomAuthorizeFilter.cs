@@ -35,15 +35,29 @@ namespace HotelReservationSystem.API.Filters
                 return;
             }
 
-            var query = new HasAccessQuery(userRole, _requiredFeature);
-            var result = await _mediator.Send(query);
+            //---
+
+            var result = await _mediator.Send(new HasAccessQuery(userRole, _requiredFeature));
 
             if (!result.IsSuccess)
             {
+                // HasAccessQuery it self fail
                 context.Result = new ObjectResult(ResponseViewModel<string>.Failure(result.ErrorCode, result.Message))
+                {
+                    StatusCode = StatusCodes.Status500InternalServerError
+                };
+
+                return;
+            }
+
+            if (!result.Data)
+            {
+                // Check Access 
+                context.Result = new ObjectResult(ResponseViewModel<string>.Failure(Application.Enum.ErrorCode.HasAccessFail,result.Message ?? "Access denied"))
                 {
                     StatusCode = StatusCodes.Status403Forbidden
                 };
+
                 return;
             }
 
